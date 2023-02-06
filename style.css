@@ -72,7 +72,7 @@ nav{
 }
 .container{
     justify-content: space-between;
-    padding: 13px 5%;
+    padding: 19px 5%;
     display: flex;
 }
 /* left sider bar */
@@ -126,13 +126,16 @@ nav{
     margin-right: 300px;
     flex-basis: 47%;
     display: flex;
-    padding-left: 100px
+    padding-left: 100px;
+    flex-wrap: wrap-reverse;
+    gap: 25px 130px;
+
 }
 
 .button{
     border-radius: 70px;
-    height: 100px;
-    width: 165px;
+    height: 120px;
+    width: 185px;
     margin-right: 10px;
     padding-left: 60px;
     padding-right: 60px;
@@ -142,6 +145,7 @@ nav{
     text-align: center;
     position: relative;
     overflow: hidden;
+
 }
 
 .button span{
@@ -152,12 +156,12 @@ nav{
     width: 100%;
     font-size: 40px;
 }
-.line-2{
-    margin-top: 10px;
-    margin-right: 300px;
+/* .line-2{
+    margin-top: 20px;
+    margin-right: 100px;
     flex-basis: 47%;
-    display: flex;
-    padding-left: 100px
+    padding-right: -10px;
+    padding-top: 300px;
 }
 .button-1{
     border-radius: 70px;
@@ -181,4 +185,4 @@ nav{
     left: 10px;
     width: 100%;
     font-size: 40px;
-}
+} */
