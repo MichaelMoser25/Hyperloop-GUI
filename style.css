@@ -1,4 +1,4 @@
-*{
+ *{
     margin: -5;
     padding: 0;
     box-sizing: content-box;
@@ -71,17 +71,23 @@ nav{
     font-size: 20px;
 }
 .container{
-    justify-content: space-between;
-    padding: 19px 5%;
     display: flex;
+    flex-wrap: wrap;
+    padding: 40px;
+    padding-top: 10px;
 }
 /* left sider bar */
 .left-sidebar{
     top: 60px;
     align-self: sticky;
-    flex-basis: 25%;
     position: sticky;
+    flex-basis: 100px;
+    margin-right: 50px;
 }
+.right {
+    flex-basis: 200px;
+    margin-left: 50px;
+  }
 .shortcuts p{
     color: #ffffff;
     width: fit-content;
@@ -123,12 +129,14 @@ nav{
 /* main */
 .line-1{
     margin-top: 50px;
-    margin-right: 300px;
+    margin-right: 20px;
     flex-basis: 47%;
     display: flex;
     padding-left: 100px;
     flex-wrap: wrap-reverse;
     gap: 25px 80px;
+    flex-grow: 1;
+    text-align: center;
 
 }
 
@@ -176,4 +184,30 @@ nav{
     height: 400px;
     opacity: 1;
     transform: translate(-50%, -50%) scale(2);
+}
+.sidebar {
+    width: 300px;
+    margin-left: 20px;
+}
+  
+.sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar li a {
+    display: block;
+    background-color: #eee;
+    padding: 50px;
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar li a:hover {
+    background-color: #ccc;
 }
