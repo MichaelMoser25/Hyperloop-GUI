@@ -146,7 +146,6 @@ nav{
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    text-decoration: none;
 }
 
 .button span{
