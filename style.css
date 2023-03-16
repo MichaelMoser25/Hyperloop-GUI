@@ -156,6 +156,10 @@ nav{
     overflow: hidden;
 }
 
+.button a{
+ text-decoration: none;
+}
+
 .button span{
     color: #ffffff;
     position: center;
