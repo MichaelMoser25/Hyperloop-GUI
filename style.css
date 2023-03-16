@@ -128,24 +128,21 @@ nav{
     display: flex;
     padding-left: 100px;
     flex-wrap: wrap-reverse;
-    gap: 25px 130px;
+    gap: 25px 80px;
 
 }
 
 .button{
     border-radius: 70px;
-    height: 120px;
-    width: 185px;
+    height: 80px;
+    width: 145px;
     margin-right: 10px;
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 60px;
-    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 50px;
+    padding-bottom: 5px;
     background: #ffaa009c;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-
 }
 
 .button span{
@@ -154,35 +151,5 @@ nav{
     bottom: 60px;
     left: 10px;
     width: 100%;
-    font-size: 40px;
+    font-size: 30px;
 }
-/* .line-2{
-    margin-top: 20px;
-    margin-right: 100px;
-    flex-basis: 47%;
-    padding-right: -10px;
-    padding-top: 300px;
-}
-.button-1{
-    border-radius: 70px;
-    height: 100px;
-    width: 165px;
-    margin-right: 10px;
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 60px;
-    padding-bottom: 10px;
-    background: #ffaa009c;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.button-1 span{
-    color: #ffffff;
-    position: center;
-    bottom: 60px;
-    left: 10px;
-    width: 100%;
-    font-size: 40px;
-} */
