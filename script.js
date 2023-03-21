@@ -4,9 +4,9 @@ window.onload = function() {
       window.location = "dashboard.html";
     });
 
-    const controls = document.getElementById("controls");
-    controls.addEventListener('click', function() {
-      window.location = "controls.html";
+    const alerts = document.getElementById("alerts");
+    alerts.addEventListener('click', function() {
+      window.location = "alerts.html";
     });
 
     const inputs = document.getElementById("inputs");
