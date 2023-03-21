@@ -14,6 +14,7 @@ nav{
     background: #8a0c0c;
     padding: 2px 5%;
     position: sticky;
+    min-height: 200px; 
 }
 /* Nav */
 .nav-left, .nav-right{
@@ -21,15 +22,16 @@ nav{
     align-items: center
 }
 .logo{
-    width: 200px;
+    width: 750px;
     margin-right: 5px;
 
 }
 .nav-left p{
     color: #ffffff;
-    font-size: 90px;
-    margin: 29px 70px 10px; 
+    font-size: 75px;
+    margin: 29px 10px 10px; 
     text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
 }
 .event{
     font-size: 25px;
@@ -103,7 +105,7 @@ nav{
 
 }
 .shortcuts h4{
-    color: #ffaa009c;
+    color: #ffaa00da;
     width: 220px;
     display: flex;
     align-items: center;
@@ -128,7 +130,7 @@ nav{
 
 /* main */
 .line-1{
-    margin-top: 50px;
+    margin-top: 20px;
     margin-right: 20px;
     flex-basis: 47%;
     display: flex;
@@ -141,15 +143,15 @@ nav{
 }
 
 .button{
-    border-radius: 70px;
-    height: 120px;
-    width: 200px;
+    border-radius: 30px;
+    height: 75px;
+    width: 600px;
     margin-right: 10px;
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 50px;
     padding-bottom: 5px;
-    background: #ffaa009c;
+    background: #ffaa008e;
     text-align: center;
     cursor: pointer;
     position: relative;
@@ -165,7 +167,7 @@ nav{
     position: relative;
     width: 100%;
     font-size: 35px;
-    top: 15px;
+    font-family: arial; 
 }
 
 .button::before {
@@ -192,9 +194,15 @@ nav{
 .sidebar {
     border-radius: 10px; 
     margin-top: 50px;
-    margin-left: -20px; 
-    width: 55vh; 
+    margin-left: -50px; 
+    width: 57vh; 
     height: 90%; 
-    border: 1px solid white; 
+    border: 2px solid white; 
 
+}
+
+.qpod {
+    width: 600px; 
+    height: 600px; 
+    margin-left: -8px;  
 }
