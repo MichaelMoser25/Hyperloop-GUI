@@ -19,3 +19,4 @@ window.onload = function() {
       window.location = "electrical.html";
     });
   };
+  
