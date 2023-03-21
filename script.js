@@ -14,8 +14,8 @@ window.onload = function() {
       window.location = "inputs.html";
     });
 
-    const electrical = document.getElementById("electrical");
-    electrical.addEventListener('click', function() {
-      window.location = "electrical.html";
+    const podSystem = document.getElementById("podSystem");
+    podSystem.addEventListener('click', function() {
+      window.location = "podSystem.html";
     });
   };

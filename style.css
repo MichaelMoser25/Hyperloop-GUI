@@ -188,29 +188,13 @@ nav{
     opacity: 1;
     transform: translate(-50%, -50%) scale(2);
 }
+
 .sidebar {
-    width: 300px;
-    margin-left: 20px;
-}
-  
-.sidebar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+    border-radius: 10px; 
+    margin-top: 50px;
+    margin-left: -20px; 
+    width: 55vh; 
+    height: 90%; 
+    border: 1px solid white; 
 
-.sidebar li {
-    margin-bottom: 10px;
-}
-
-.sidebar li a {
-    display: block;
-    background-color: #eee;
-    padding: 50px;
-    text-decoration: none;
-    color: #333;
-}
-
-.sidebar li a:hover {
-    background-color: #ccc;
 }
