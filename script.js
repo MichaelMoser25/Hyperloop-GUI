@@ -31,3 +31,4 @@ window.onload = function() {
       document.getElementById("inputsSidebar").style.display = "flex"
     });
   };
+  
