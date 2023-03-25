@@ -251,9 +251,10 @@ nav{
 }
 
 #speedometer-value {
-	font-size: 50px;
+	font-size: 500px;
 	text-align: center;
 	margin-top: 50px;
+    color: white; 
 }
 
 /* right sidebar dashboard */
