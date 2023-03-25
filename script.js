@@ -1,22 +1,34 @@
 window.onload = function() {
     const dashboard = document.getElementById("dashboard");
     dashboard.addEventListener('click', function() {
-      window.location = "dashboard.html";
+      document.getElementById("menuSidebar").hidden = true
+      document.getElementById("menuMiddle").hidden = true
+      document.getElementById("dashboardMiddle").style.display = "flex"
+      document.getElementById("dashboardSidebar").style.display = "flex"
     });
 
-    const controls = document.getElementById("controls");
-    controls.addEventListener('click', function() {
-      window.location = "controls.html";
+    const alerts = document.getElementById("podSystem");
+    alerts.addEventListener('click', function() {
+      document.getElementById("menuSidebar").hidden = true
+      document.getElementById("menuMiddle").hidden = true
+      document.getElementById("podsystemMiddle").style.display = "flex"
+      document.getElementById("podsystemSidebar").style.display = "flex"
     });
 
-    const inputs = document.getElementById("inputs");
+    const inputs = document.getElementById("alerts");
     inputs.addEventListener('click', function() {
-      window.location = "inputs.html";
+      document.getElementById("menuSidebar").hidden = true
+      document.getElementById("menuMiddle").hidden = true
+      document.getElementById("alertsMiddle").style.display = "flex"
+      document.getElementById("alertsSidebar").style.display = "flex"
     });
 
-    const electrical = document.getElementById("electrical");
-    electrical.addEventListener('click', function() {
-      window.location = "electrical.html";
+    const podSystem = document.getElementById("inputs");
+    podSystem.addEventListener('click', function() {
+      document.getElementById("menuSidebar").hidden = true
+      document.getElementById("menuMiddle").hidden = true
+      document.getElementById("inputsMiddle").style.display = "flex"
+      document.getElementById("inputsSidebar").style.display = "flex"
     });
   };
   

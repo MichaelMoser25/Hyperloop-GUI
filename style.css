@@ -4,6 +4,7 @@
     box-sizing: content-box;
     font-family: 'Times New Roman', Times, serif;
 }
+
 body{
     background: #000000;
 }
@@ -14,6 +15,7 @@ nav{
     background: #8a0c0c;
     padding: 2px 5%;
     position: sticky;
+    min-height: 200px; 
 }
 /* Nav */
 .nav-left, .nav-right{
@@ -21,15 +23,16 @@ nav{
     align-items: center
 }
 .logo{
-    width: 200px;
+    width: 750px;
     margin-right: 5px;
 
 }
 .nav-left p{
     color: #ffffff;
-    font-size: 90px;
-    margin: 29px 70px 10px; 
+    font-size: 75px;
+    margin: 29px 10px 10px; 
     text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
 }
 .event{
     font-size: 25px;
@@ -76,7 +79,9 @@ nav{
     padding: 40px;
     padding-top: 10px;
 }
-/* left sider bar */
+
+
+/* left sider bar menu*/
 .left-sidebar{
     top: 60px;
     align-self: sticky;
@@ -103,7 +108,7 @@ nav{
 
 }
 .shortcuts h4{
-    color: #ffaa009c;
+    color: #ffaa00da;
     width: 220px;
     display: flex;
     align-items: center;
@@ -120,36 +125,36 @@ nav{
     margin-top: 20px;
 }
 
-/* right sider bar */
+/* right sider bar menu*/
 
 
 
 
 
-/* main */
-.line-1{
-    margin-top: 50px;
+/* main menu*/
+.menu-middle {
+    margin-top: 10px;
     margin-right: 20px;
     flex-basis: 47%;
     display: flex;
-    padding-left: 100px;
     flex-wrap: wrap-reverse;
     gap: 25px 80px;
     flex-grow: 1;
     text-align: center;
-
 }
 
 .button{
-    border-radius: 70px;
-    height: 80px;
-    width: 145px;
+    border-radius: 30px;
+    height: 75px;
+    width: 600px;
     margin-right: 10px;
+    margin-left: 100px;
+    margin-top: 30px;
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 50px;
     padding-bottom: 5px;
-    background: #ffaa009c;
+    background: #ffaa008e;
     text-align: center;
     cursor: pointer;
     position: relative;
@@ -162,11 +167,10 @@ nav{
 
 .button span{
     color: #ffffff;
-    position: center;
-    bottom: 60px;
-    left: 10px;
+    position: relative;
     width: 100%;
-    font-size: 30px;
+    font-size: 35px;
+    font-family: arial; 
 }
 
 .button::before {
@@ -189,29 +193,76 @@ nav{
     opacity: 1;
     transform: translate(-50%, -50%) scale(2);
 }
-.sidebar {
-    width: 300px;
-    margin-left: 20px;
-}
-  
-.sidebar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+
+.menu-right-sidebar {
+    border-radius: 10px; 
+    margin-top: 50px;
+    margin-left: -50px; 
+    width: 57vh; 
+    height: 90%; 
+    border: 2px solid white; 
+
 }
 
-.sidebar li {
-    margin-bottom: 10px;
+.qpod {
+    width: 600px; 
+    height: 600px; 
+    margin-left: -8px;  
 }
 
-.sidebar li a {
-    display: block;
-    background-color: #eee;
-    padding: 50px;
-    text-decoration: none;
-    color: #333;
+
+/* main dashboard*/
+
+#dashboardMiddle {
+    display: none; 
+    background-color: #8a0c0c;
 }
 
-.sidebar li a:hover {
-    background-color: #ccc;
+/* right sidebar dashboard */
+
+#dashboardSidebar {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* main podsystem*/
+
+#podsystemMiddle {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* right sidebar podsystem */
+
+#podsystemSidebar {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* main alerts*/
+
+#alertsMiddle {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* right sidebar alerts */
+
+#alertsSidebar {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* main inputs*/
+
+#inputsMiddle {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* right sidebar inputs */
+
+#inputsSidebar {
+    display: none; 
+    background-color: #8a0c0c;
 }
