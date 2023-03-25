@@ -79,7 +79,9 @@ nav{
     padding: 40px;
     padding-top: 10px;
 }
-/* left sider bar */
+
+
+/* left sider bar menu*/
 .left-sidebar{
     top: 60px;
     align-self: sticky;
@@ -123,14 +125,14 @@ nav{
     margin-top: 20px;
 }
 
-/* right sider bar */
+/* right sider bar menu*/
 
 
 
 
 
-/* main */
-.middle {
+/* main menu*/
+.menu-middle {
     margin-top: 10px;
     margin-right: 20px;
     flex-basis: 47%;
@@ -192,7 +194,7 @@ nav{
     transform: translate(-50%, -50%) scale(2);
 }
 
-.sidebar {
+.menu-right-sidebar {
     border-radius: 10px; 
     margin-top: 50px;
     margin-left: -50px; 
@@ -206,4 +208,61 @@ nav{
     width: 600px; 
     height: 600px; 
     margin-left: -8px;  
+}
+
+
+/* main dashboard*/
+
+#dashboardMiddle {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* right sidebar dashboard */
+
+#dashboardSidebar {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* main podsystem*/
+
+#podsystemMiddle {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* right sidebar podsystem */
+
+#podsystemSidebar {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* main alerts*/
+
+#alertsMiddle {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* right sidebar alerts */
+
+#alertsSidebar {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* main inputs*/
+
+#inputsMiddle {
+    display: none; 
+    background-color: #8a0c0c;
+}
+
+/* right sidebar inputs */
+
+#inputsSidebar {
+    display: none; 
+    background-color: #8a0c0c;
 }
