@@ -230,7 +230,7 @@ nav{
 .speedometer-needle {
 	width: 20px;
 	height: 150px;
-	background-color: red;
+	background-color: blue;
 	position: absolute;
 	left: 50%;
 	top: 50%;
