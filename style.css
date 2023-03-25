@@ -4,6 +4,7 @@
     box-sizing: content-box;
     font-family: 'Times New Roman', Times, serif;
 }
+
 body{
     background: #000000;
 }
@@ -129,17 +130,15 @@ nav{
 
 
 /* main */
-.line-1{
-    margin-top: 20px;
+.middle {
+    margin-top: 10px;
     margin-right: 20px;
     flex-basis: 47%;
     display: flex;
-    padding-left: 100px;
     flex-wrap: wrap-reverse;
     gap: 25px 80px;
     flex-grow: 1;
     text-align: center;
-
 }
 
 .button{
@@ -147,6 +146,8 @@ nav{
     height: 75px;
     width: 600px;
     margin-right: 10px;
+    margin-left: 100px;
+    margin-top: 30px;
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 50px;

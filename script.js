@@ -1,21 +1,25 @@
 window.onload = function() {
     const dashboard = document.getElementById("dashboard");
     dashboard.addEventListener('click', function() {
-      window.location = "dashboard.html";
+      document.getElementById("menuSidebar").hidden = true
+      document.getElementById("menuMiddle").hidden = true
     });
 
     const alerts = document.getElementById("alerts");
     alerts.addEventListener('click', function() {
-      window.location = "alerts.html";
+      document.getElementById("menuSidebar").hidden = true
+      document.getElementById("menuMiddle").hidden = true
     });
 
     const inputs = document.getElementById("inputs");
     inputs.addEventListener('click', function() {
-      window.location = "inputs.html";
+      document.getElementById("menuSidebar").hidden = true
+      document.getElementById("menuMiddle").hidden = true
     });
 
     const podSystem = document.getElementById("podSystem");
     podSystem.addEventListener('click', function() {
-      window.location = "podSystem.html";
+      document.getElementById("menuSidebar").hidden = true
+      document.getElementById("menuMiddle").hidden = true
     });
   };
