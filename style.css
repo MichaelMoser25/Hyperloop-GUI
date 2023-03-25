@@ -218,6 +218,44 @@ nav{
     background-color: #8a0c0c;
 }
 
+#speedometer {
+	width: 300px;
+	height: 300px;
+	border-radius: 50%;
+	border: 10px solid black;
+	position: relative;
+	margin: 50px auto;
+}
+
+.speedometer-needle {
+	width: 20px;
+	height: 150px;
+	background-color: red;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform-origin: bottom center;
+	transform: translateX(-50%) rotate(0deg);
+	transition: transform 0.5s ease-in-out;
+}
+
+.speedometer-center {
+	width: 30px;
+	height: 30px;
+	background-color: black;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 50%;
+}
+
+#speedometer-value {
+	font-size: 50px;
+	text-align: center;
+	margin-top: 50px;
+}
+
 /* right sidebar dashboard */
 
 #dashboardSidebar {
