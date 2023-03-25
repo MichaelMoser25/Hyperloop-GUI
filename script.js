@@ -32,7 +32,7 @@ window.onload = function() {
     });
   };
   
-  var speedometer = document.getElementById("speedometer");
+var speedometer = document.getElementById("speedometer");
 var speedometerValue = document.getElementById("speedometer-value");
 var speed = 0;
 var maxSpeed = 180;
