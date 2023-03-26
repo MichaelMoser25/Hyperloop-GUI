@@ -28,7 +28,6 @@ window.onload = function() {
       document.getElementById("menuSidebar").hidden = true
       document.getElementById("menuMiddle").hidden = true
       document.getElementById("inputsMiddle").style.display = "flex"
-      document.getElementById("inputsSidebar").style.display = "flex"
     });
   };
   
@@ -41,6 +40,7 @@ function updateSpeedometer() {
 	var angle = speed / maxSpeed * 180;
 	document.querySelector(".speedometer-needle").style.transform = "translateX(-50%) rotate(" + angle + "deg)";
 	speedometerValue.innerHTML = speed + " km/h";
+  console.log(speedometerValue); 
 }
 
 setInterval(function() {
@@ -50,3 +50,8 @@ setInterval(function() {
 	}
 	updateSpeedometer();
 }, 1000);
+
+function locallyStore() {
+  var retrieveMotorTemp = document.getElementById("motor-temperature").value; 
+  var motorTemperature = localStorage.setItem("Motor Temperature", retrieveMotorTemp); 
+}
