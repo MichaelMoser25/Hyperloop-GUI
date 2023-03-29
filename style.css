@@ -408,4 +408,40 @@ input[type="submit"] {
 input[type=text]::placeholder {
     color: white; 
     opacity: 50%;
-  }
+}
+.alert {
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.warning {
+    background-color: #f44336;
+    color: white;
+}
+
+.error {
+    background-color: #ff9800;
+    color: white;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: black;
+}
