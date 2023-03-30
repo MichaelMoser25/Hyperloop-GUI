@@ -102,20 +102,82 @@
         </div>
 
         <!-----Pod System Center Content----->
-        <div class ="podsystem-middle" >
-            <div id="podsystemMiddle">
+        <div class ="podsystem-middle" id="podsystemMiddle">
+            <div class="telemetry">
                 <h1>Pod System Center Content</h1>
             </div>
+            <div class="divider"></div>
         </div>
 
         <!-----Pod System Right Siderbar----->
         <div class="podsystem-right-sidebar" id="podsystemSidebar">
-            <h1>Pod System Right Siderbar</h1>
+            <div class="sensor-data" id="temperatureData">
+                <p class="data-header">Temperature</p>
+                <div class="data-holder">
+                    <div class="data-text">
+                        <p class="data-name">Friction Brakes:</p>
+                        <p class="data-value">55C</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">Electric Brakes:</p>
+                        <p class="data-value">75C</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">Main Battery:</p>
+                        <p class="data-value">45C</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">Motor:</p>
+                        <p class="data-value">75C</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">Liquid Cooling:</p>
+                        <p class="data-value">75C</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">Battery: </p>
+                        <p class="data-value">75C</p>
+                    </div>
+                </div>
+            </div>
+            <div class="sensor-data" id="voltageData">
+                <p class="data-header">Voltage</p>
+                <div class="data-holder">
+                    <div class="data-text">
+                        <p class="data-name">Main Battery:</p>
+                        <p class="data-value">47.1V</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">24V Battery:</p>
+                        <p class="data-value">24.5V</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">5V Converter</p>
+                        <p class="data-value">5.02V</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">12V Converter:</p>
+                        <p class="data-value">12.2V</p>
+                    </div>
+                </div>
+            </div>
+            <div class="sensor-data" id="pressureData">
+                <p class="data-header">Pressure</p>
+                <div class="data-holder">
+                    <div class="data-text">
+                        <p class="data-name">Air Tank Pressure:</p>
+                        <p class="data-value">55C</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">Vessel Pressure</p>
+                        <p class="data-value">75C</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-----Alerts Center Content----->
-        <div class ="alerts-middle" >
-            <div id="alertsMiddle">
+        <div class ="alerts-middle"  id="alertsMiddle">
                 <div class="alert success">
                     <span class="closebtn">&times;</span>  
                     <p><strong>Success!</strong> Your message has been sent.</p>
@@ -130,12 +192,10 @@
                     <span class="closebtn">&times;</span>  
                     <p><strong>Error!</strong> Invalid input. Please try again.</p>
                 </div>
-            </div>
         </div>
 
         <!-----Alerts Right Siderbar----->
         <div class="alerts-right-sidebar" id="alertsSidebar">
-            
         </div>
 
         <!-----Inputs Content----->
