@@ -19,24 +19,24 @@
         </div>  
         <div class="event">
             <div class="date">
-                <h2 id="date-number">10</h2>
-                <span>April</span>
+                <h2 id="dayLeft">3</h2>
+                <span id="monthLeft">April</span>
             </div>
             <div class="info">
-                <h4>Finish GUI</h4>
-                <p><i class="fa-solid fa-location-dot"></i> Stirling Hall</p>
+                <h4 id="eventLeft">Finish GUI</h4>
+                <p><i class="fa-solid fa-location-dot"></i> </p><p id="locationLeft">Stirling Hall</p>
                 <u><a href="https://queenshyperloop.ca/" target="_blank">More Info</a></u>
             </div>
         </div>
         <div class="event">
             <div class="date">
-                <h2>22</h2>
-                <span>April</span>
+                <h2 id="dayRight">25</h2>
+                <span id="monthRight">April</span>
             </div>
             <div class="info">
-                <h4>Final Presentation</h4>
-                <p><i class="fa-solid fa-location-dot"></i> Chernoff Hall</p>
-                <u><a href="https://www.queensu.ca/" target="_blank">More Info</a></u>
+                <h4 id="eventRight">Final Presentation</h4>
+                <p><i class="fa-solid fa-location-dot"></i> </p><p id="locationRight">Mitchell Hall</p>
+                <u><a href="https://github.com/MOMOtrial/Hyperloop-GUI" target="_blank">More Info</a></u>
             </div>
         </div>
         
@@ -61,16 +61,16 @@
         <div class ="menu-middle" >
             <div id="menuMiddle">
                 <div id="dashboard" class="button">
-                    <span>Dashboard</span>
+                    <span>DASHBOARD</span>
                 </div>
                 <div id="podSystem" class="button">
-                    <span>Pod System</span>
+                    <span>POD SYSTEM</span>
                 </div>
                 <div id="alerts" class="button">
-                    <span>Alerts</span>
+                    <span>ALERTS</span>
                 </div>
                 <div id="inputs" class="button">
-                    <span>Inputs</span>
+                    <span>INPUTS</span>
                 </div>
             </div>
         </div>
@@ -118,17 +118,17 @@
             <div id="alertsMiddle">
                 <div class="alert success">
                     <span class="closebtn">&times;</span>  
-                    <strong>Success!</strong> Your message has been sent.
+                    <p><strong>Success!</strong> Your message has been sent.</p>
                 </div>
         
                 <div class="alert warning">
                     <span class="closebtn">&times;</span>  
-                    <strong>Warning!</strong> This action cannot be undone.
+                    <p><strong>Warning!</strong> This action cannot be undone.</p>
                 </div>
         
                 <div class="alert error">
                     <span class="closebtn">&times;</span>  
-                    <strong>Error!</strong> Invalid input. Please try again.
+                    <p><strong>Error!</strong> Invalid input. Please try again.</p>
                 </div>
             </div>
         </div>
@@ -143,29 +143,33 @@
             <div id="inputsMiddle">
                 <form>
                 <fieldset>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="enter in degrees"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="event-left">Event Left<input id="event-left" name="event-left" type="text" placeholder="input event" maxlength="30"/></label>
+                    <label for="day-left">Day Left<input id="day-left" name="day-left" type="text" placeholder="input day" maxlength="2"/></label>
+                    <label for="month-left">Month Left<input id="month-left" name="month-left" type="text" placeholder="input month" maxlength="9"/></label>
+                    <label for="location-left">Location Left<input id="location-left" name="location-left" type="text" placeholder="input location" maxlength="25"/></label>
+                    <label for="event-right">Event Right<input id="event-right" name="event-right" type="text" placeholder="input event" maxlength="30"/></label>
+                    <label for="day-right">Day Right<input id="day-right" name="day-right" type="text" placeholder="input day" maxlength="2"/></label>
+                    <label for="month-right">Month Right<input id="month-right" name="month-right" type="text" placeholder="input month" maxlength="9"/></label>
+                    <label for="location-right">Location Right<input id="location-right" name="location-right" type="text" placeholder="input location" maxlength="25"/></label>
                   </fieldset>
-                  <input type="submit" value="Submit" onclick="locallyStore()"/>
-                  </form>
+                  <input type="button" value="Save Changes" onclick="locallyStore()"/>
+                </form>
             </div>
         </div>
 
