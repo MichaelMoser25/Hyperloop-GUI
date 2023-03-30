@@ -42,7 +42,6 @@ nav{
 .event a{
     color: grey;
     font-size: 18px;
-    text-decoration: none;
     display: flex; 
     margin-top: 20px; 
 }
