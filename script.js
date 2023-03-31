@@ -143,12 +143,12 @@ let tempChart = new Chart(tempCanvas, {
 });
 
 let currentTemp = +(localStorage.getItem("Motor Temperature"));
-if (currentTemp === "" || currentTemp === undefined) currentTemp = 45;  
+if (currentTemp === "" || currentTemp === undefined || currentTemp === 0.0) currentTemp = 45;  
 let currentTime = new Date().toLocaleTimeString();
 
 function startupTemp() { 
 currentTemp = +(localStorage.getItem("Motor Temperature"));
-if (currentTemp === "" || currentTemp === undefined) currentTemp = 45;  
+if (currentTemp === "" || currentTemp === undefined || currentTemp === 0.0) currentTemp = 45;  
 let currentTime = new Date().toLocaleTimeString();
 dataPointsTemp.push(currentTemp);
 tempData.labels.push(currentTime);
@@ -200,12 +200,12 @@ let voltageChart = new Chart(voltageCanvas, {
 });
 
 let currentVoltage = +(localStorage.getItem("Main Battery Voltage"));
-if (currentVoltage === "" || currentVoltage === undefined) currentVoltage = 48.1;  
+if (currentVoltage === "" || currentVoltage === undefined || currentVoltage === 0.0) currentVoltage = 48.1;  
 currentTime = new Date().toLocaleTimeString();
 
 function startupVoltage() { 
 currentVoltage = +(localStorage.getItem("Main Battery Voltage"));
-if (currentVoltage === "" || currentVoltage === undefined) currentVoltage = 48.1;  
+if (currentVoltage === "" || currentVoltage === undefined || currentVoltage === 0.0) currentVoltage = 48.1;  
 let currentTime = new Date().toLocaleTimeString();
 dataPointsVoltage.push(currentVoltage);
 voltageData.labels.push(currentTime);
