@@ -79,7 +79,7 @@ nav{
     padding-top: 10px;
 }
 
-/* left sider bar menu*/
+/* left side bar menu*/
 .left-sidebar{
     top: 60px;
     align-self: sticky;
@@ -215,10 +215,73 @@ nav{
 
 #dashboardMiddle {
     display: none; 
-    background-color: #111016;
+    position: absolute; 
+    left: 325px; 
+    top: 250px; 
+    width: 1500px; 
+    height: 780px; 
+    color: white; 
+    border: solid white 1px; 
 }
 
-#speedometer {
+.trip-bar {
+    position: absolute; 
+    bottom: 20px; 
+    left: 75px; 
+}
+
+.trip-bar h2 {
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-top: 40px;
+    margin-bottom: 5px; 
+    color: white; 
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 20px; 
+
+}
+
+.trip-progress {
+    background: gray; 
+    width: 1350px;
+    height: 10px;
+    border-radius: 3px;
+}
+
+.trip-progress div {
+    height: 10px; 
+    width: 0%; 
+    background: grey; 
+    border-radius: 3px;
+}
+
+.trip-progress div span {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%; 
+    background: black; 
+    float: right; 
+    margin-top: -15px; 
+    margin-right: -20px; 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    border: 2px solid red;  
+}
+
+.pod-distance {
+    animation: pod-distance 1s linear forwards;
+}
+
+@keyframes pod-distance {
+    100%{
+        width: 50%; 
+    }
+}
+
+/* #speedometer {
 	width: 300px;
 	height: 300px;
 	border-radius: 50%;
@@ -255,65 +318,7 @@ nav{
 	text-align: center;
 	margin-top: 50px;
     color: white; 
-}
-
-/* right sidebar dashboard */
-
-#dashboardSidebar {
-    display: none; 
-    background-color: #111016;
-}
-
-.trip-bar h2 {
-    font-weight: 400;
-    letter-spacing: 1px;
-    margin-top: 40px;
-    margin-bottom: 5px; 
-    color: white; 
-    font-size: 16px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin-bottom: 20px; 
-
-}
-
-.trip-progress {
-    background: gray; 
-    width: 600px;
-    height: 10px;
-    border-radius: 5px; 
-}
-
-.trip-progress div {
-    height: 10px; 
-    border-radius: 5px; 
-    width: 0%; 
-    background: red; 
-}
-
-.trip-progress div span {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%; 
-    background: black; 
-    float: right; 
-    margin-top: -15px; 
-    margin-right: -20px; 
-    color: white; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    border: 2px solid red;  
-}
-
-.pod-distance {
-    animation: pod-distance 1s linear forwards;
-}
-
-@keyframes pod-distance {
-    100%{
-        width: 50%; 
-    }
-}
+} */
 
 /* main podsystem*/
 
@@ -429,7 +434,6 @@ top: 350px;
     display: none; 
     background-color: #111016;
 }
-
 
 .alert {
     padding: 20px;
