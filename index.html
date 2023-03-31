@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css"> 
     <script src="https://kit.fontawesome.com/2910d20e55.js" crossorigin="anonymous"></script>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon" href="favicon1.png" type ="image/x-icon">
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -43,8 +44,7 @@
     </nav>
 
     <div class="container">
-
-        <!-----Left Siderbar----->
+        <!-----Left Sidebar----->
         <div class="left-siderbar">
             <div class="shortcuts">
                 <h4>Shortcuts</h4>
@@ -58,7 +58,7 @@
         </div>
         
         <!-----Menu Center Content----->
-        <div class ="menu-middle" >
+        <div class ="menu-middle">
             <div id="menuMiddle">
                 <div id="dashboard" class="button">
                     <span>DASHBOARD</span>
@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <!-----Dashboard Right Siderbar----->
+        <!-----Dashboard Right Sidebar----->
         <div class="dashboard-right-sidebar" id="dashboardSidebar">
             <div class="trip-bar">
                 <h2>Set Values</h2>
@@ -103,74 +103,79 @@
 
         <!-----Pod System Center Content----->
         <div class ="podsystem-middle" id="podsystemMiddle">
-            <div class="telemetry">
-                <h1>Pod System Center Content</h1>
-            </div>
+                <div class="telemetry" id="motorGraph">
+                    <p>Motor Temperature Chart (°C)</p>
+                    <canvas id="tempGraph"></canvas>
+                </div>
+                <div class="telemetry" id="batteryGraph">
+                    <p>Main Battery Voltage Chart (V)</p>
+                    <canvas id="voltageGraph"></canvas>
+                </div>
             <div class="divider"></div>
         </div>
 
-        <!-----Pod System Right Siderbar----->
+        <!-----Pod System Right Sidebar----->
         <div class="podsystem-right-sidebar" id="podsystemSidebar">
             <div class="sensor-data" id="temperatureData">
-                <p class="data-header">Temperature</p>
+                <p class="data-header">Temperature (°C)</p>
                 <div class="data-holder">
                     <div class="data-text">
                         <p class="data-name">Friction Brakes:</p>
-                        <p class="data-value">55C</p>
+                        <p class="data-value" id="frictionBrakes">45</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">Electric Brakes:</p>
-                        <p class="data-value">75C</p>
+                        <p class="data-value" id="electricBrakes">45</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">Main Battery:</p>
-                        <p class="data-value">45C</p>
+                        <p class="data-value" id="mainBattery">45</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">Motor:</p>
-                        <p class="data-value">75C</p>
+                        <p class="data-value" id="motor">45</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">Liquid Cooling:</p>
-                        <p class="data-value">75C</p>
+                        <p class="data-value" id="liquidCooling">45</p>
                     </div>
                     <div class="data-text">
-                        <p class="data-name">Battery: </p>
-                        <p class="data-value">75C</p>
+                        <p class="data-name">24V Battery:</p>
+                        <p class="data-value" id="24VBattery">45</p>
                     </div>
                 </div>
             </div>
             <div class="sensor-data" id="voltageData">
-                <p class="data-header">Voltage</p>
+                <p class="data-header">Voltage (V)</p>
                 <div class="data-holder">
                     <div class="data-text">
                         <p class="data-name">Main Battery:</p>
-                        <p class="data-value">47.1V</p>
+                        <p class="data-value" id="mainBatteryVoltage">48.1</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">24V Battery:</p>
-                        <p class="data-value">24.5V</p>
+                        <p class="data-value" id="24VBatteryVoltage">24.4</p>
                     </div>
                     <div class="data-text">
-                        <p class="data-name">5V Converter</p>
-                        <p class="data-value">5.02V</p>
+                        <p class="data-name">5V Converter:</p>
+                        <p class="data-value" id="5VConverterVoltage">5.01</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">12V Converter:</p>
-                        <p class="data-value">12.2V</p>
+                        <p class="data-value" id="12VConverterVoltage">12.3</p>
                     </div>
                 </div>
             </div>
             <div class="sensor-data" id="pressureData">
-                <p class="data-header">Pressure</p>
+                <p class="data-header">Pressure (kPa)</p>
                 <div class="data-holder">
                     <div class="data-text">
                         <p class="data-name">Air Tank Pressure:</p>
-                        <p class="data-value">55C</p>
+                        <p class="data-value" id="airTankPressure">55</p>
                     </div>
                     <div class="data-text">
-                        <p class="data-name">Vessel Pressure</p>
-                        <p class="data-value">75C</p>
+                        <p class="data-name">Vessel Pressure:</p>
+                        <p class="data-value" id="vesselPressure">75</p>
                     </div>
                 </div>
             </div>
@@ -194,7 +199,7 @@
                 </div>
         </div>
 
-        <!-----Alerts Right Siderbar----->
+        <!-----Alerts Right Sidebar----->
         <div class="alerts-right-sidebar" id="alertsSidebar">
         </div>
 
@@ -203,22 +208,22 @@
             <div id="inputsMiddle">
                 <form>
                 <fieldset>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="vessel-pressure">Vessel Pressure<input id="vessel-pressure" name="vessel-pressure" type="text" placeholder="input kilopascals" maxlength="4"/></label>
+                    <label for="air-tank-pressure">Air Tank Pressure<input id="air-tank-pressure" name="air-tank-pressure" type="text" placeholder="input kilopascals" maxlength="4"/></label>
+                    <label for="12v-converter-voltage">12V Converter Voltage<input id="12v-converter-voltage" name="12v-converter-voltage" type="text" placeholder="input voltage" maxlength="4"/></label>
+                    <label for="5v-converter-voltage">5V Converter Voltage<input id="5v-converter-voltage" name="5v-converter-voltage" type="text" placeholder="input voltage" maxlength="4"/></label>
+                    <label for="24v-battery-voltage">24V Battery Voltage<input id="24v-battery-voltage" name="24v-battery-voltage" type="text" placeholder="input voltage" maxlength="4"/></label>
+                    <label for="main-battery-voltage">Main Battery Voltage<input id="main-battery-voltage" name="main-battery-voltage" type="text" placeholder="input voltage" maxlength="4"/></label>
+                    <label for="24v-battery">24V Battery Temperature<input id="24v-battery" name="24v-battery" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="liquid-cooling">Liquid Cooling Temperature<input id="liquid-cooling" name="liquid-cooling" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="main-battery">Main Battery Temperature<input id="main-battery" name="main-battery" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="electric-brakes">Electric Brakes Temperature<input id="electric-brakes" name="electric-brakes" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="friction-brakes">Friction Brakes Temperature<input id="friction-brakes" name="friction-brakes" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
                     <label for="event-left">Event Left<input id="event-left" name="event-left" type="text" placeholder="input event" maxlength="30"/></label>
                     <label for="day-left">Day Left<input id="day-left" name="day-left" type="text" placeholder="input day" maxlength="2"/></label>
                     <label for="month-left">Month Left<input id="month-left" name="month-left" type="text" placeholder="input month" maxlength="9"/></label>
@@ -232,7 +237,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 </body>
 </html>

@@ -1,4 +1,6 @@
 window.onload = function() {
+
+    //start of page visibility
     const dashboard = document.getElementById("dashboard");
     dashboard.addEventListener('click', function() {
       document.getElementById("menuSidebar").hidden = true
@@ -13,6 +15,8 @@ window.onload = function() {
       document.getElementById("menuMiddle").hidden = true
       document.getElementById("podsystemMiddle").style.display = "flex"
       document.getElementById("podsystemSidebar").style.display = "flex"
+      startupTemp(); 
+      startupVoltage(); 
     });
 
     const inputs = document.getElementById("alerts");
@@ -29,7 +33,9 @@ window.onload = function() {
       document.getElementById("menuMiddle").hidden = true
       document.getElementById("inputsMiddle").style.display = "flex"
     });
+    //end of page visibility
 
+    //start of speedometer
     var speedometer = document.getElementById("speedometer");
     var speedometerValue = document.getElementById("speedometer-value");
     var speed = 0;
@@ -48,7 +54,9 @@ setInterval(function() {
 	}
 	updateSpeedometer();
 }, 1000);
+//end of speedometer 
 
+//Start at local storage conditionals
 if(localStorage.getItem("Location Right")!= undefined) {
   document.getElementById("locationRight").innerHTML = localStorage.getItem("Location Right"); 
 }
@@ -73,13 +81,160 @@ if(localStorage.getItem("Day Left")!= undefined) {
 if(localStorage.getItem("Event Left")!= undefined) {
   document.getElementById("eventLeft").innerHTML = localStorage.getItem("Event Left"); 
 }
+if(localStorage.getItem("Friction Brakes Temperature")!= undefined) {
+  document.getElementById("frictionBrakes").innerHTML = localStorage.getItem("Friction Brakes Temperature"); 
+}
+if(localStorage.getItem("Electric Brakes Temperature")!= undefined) {
+  document.getElementById("electricBrakes").innerHTML = localStorage.getItem("Electric Brakes Temperature"); 
+}
+if(localStorage.getItem("Main Battery Temperature")!= undefined) {
+  document.getElementById("mainBattery").innerHTML = localStorage.getItem("Main Battery Temperature"); 
+}
+if(localStorage.getItem("Liquid Cooling Temperature")!= undefined) {
+  document.getElementById("liquidCooling").innerHTML = localStorage.getItem("Liquid Cooling Temperature"); 
+}
+if(localStorage.getItem("24V Battery Temperature")!= undefined) {
+  document.getElementById("24VBattery").innerHTML = localStorage.getItem("24V Battery Temperature"); 
+}
+if(localStorage.getItem("Main Battery Voltage")!= undefined) {
+  document.getElementById("mainBatteryVoltage").innerHTML = localStorage.getItem("Main Battery Voltage"); 
+}
+if(localStorage.getItem("24V Battery Voltage")!= undefined) {
+  document.getElementById("24VBatteryVoltage").innerHTML = localStorage.getItem("24V Battery Voltage"); 
+}
+if(localStorage.getItem("5V Converter Voltage")!= undefined) {
+  document.getElementById("5VConverterVoltage").innerHTML = localStorage.getItem("5V Converter Voltage"); 
+}
+if(localStorage.getItem("12V Converter Voltage")!= undefined) {
+  document.getElementById("12VConverterVoltage").innerHTML = localStorage.getItem("12V Converter Voltage"); 
+}
+if(localStorage.getItem("Air Tank Pressure")!= undefined) {
+  document.getElementById("airTankPressure").innerHTML = localStorage.getItem("Air Tank Pressure"); 
+}
+if(localStorage.getItem("Vessel Pressure")!= undefined) {
+  document.getElementById("vesselPressure").innerHTML = localStorage.getItem("Vessel Pressure"); 
+}
+if(localStorage.getItem("Motor Temperature")!= undefined) {
+  document.getElementById("motor").innerHTML = localStorage.getItem("Motor Temperature"); 
+}
+//end of local storage conditionals
+
+//start of graph creation temperature
+let tempCanvas = document.getElementById("tempGraph");
+let dataPointsTemp = [];
+let tempData = {
+    labels: [],
+    datasets: [{
+        label: "Temperature",
+        data: dataPointsTemp,
+        borderColor: "rgba(238,188,49,255)",
+        pointRadius: 3
+    }]
+};
+
+let chartOptionsTemp = {
+    maintainAspectRatio: false,
+};
+
+let tempChart = new Chart(tempCanvas, {
+    type: 'line',
+    data: tempData,
+    options: chartOptionsTemp
+});
+
+let currentTemp = +(localStorage.getItem("Motor Temperature"));
+if (currentTemp === "" || currentTemp === undefined) currentTemp = 45;  
+let currentTime = new Date().toLocaleTimeString();
+
+function startupTemp() { 
+currentTemp = +(localStorage.getItem("Motor Temperature"));
+if (currentTemp === "" || currentTemp === undefined) currentTemp = 45;  
+let currentTime = new Date().toLocaleTimeString();
+dataPointsTemp.push(currentTemp);
+tempData.labels.push(currentTime);
+tempChart.update();
+}
+
+function addDataTemp() {
+    let updateFromLocalTemp = localStorage.getItem("Motor Temperature");   
+    currentTemp += Math.random() * (2*(+updateFromLocalTemp/100)) - (+updateFromLocalTemp/100);
+    if(currentTemp > +updateFromLocalTemp/2) currentTemp - 2*(+updateFromLocalTemp/100); 
+    if(currentTemp < +updateFromLocalTemp/-2) currentTemp + 2*(+updateFromLocalTemp/100); 
+    currentTime = new Date().toLocaleTimeString();
+
+    if (dataPointsTemp.length >= 10) {
+        dataPointsTemp.shift();
+        tempData.labels.shift();
+    }
+
+    localStorage.setItem("Motor Temperature", (currentTemp).toFixed(1));
+    document.getElementById("motor").innerHTML = localStorage.getItem("Motor Temperature"); 
+    dataPointsTemp.push(currentTemp);
+    tempData.labels.push(currentTime);
+    tempChart.update();
+}
+setInterval(addDataTemp, 5000);
+//end of graph creation temperature
+
+//start of graph creation voltage
+let voltageCanvas = document.getElementById("voltageGraph");
+let dataPointsVoltage = [];
+let voltageData = {
+    labels: [],
+    datasets: [{
+        label: "Voltage",
+        data: dataPointsVoltage,
+        borderColor: "rgba(238,188,49,255)",
+        pointRadius: 3
+    }]
+};
+
+let chartOptionsVoltage = {
+    maintainAspectRatio: false,
+};
+
+let voltageChart = new Chart(voltageCanvas, {
+    type: 'line',
+    data: voltageData,
+    options: chartOptionsVoltage
+});
+
+let currentVoltage = +(localStorage.getItem("Main Battery Voltage"));
+if (currentVoltage === "" || currentVoltage === undefined) currentVoltage = 48.1;  
+currentTime = new Date().toLocaleTimeString();
+
+function startupVoltage() { 
+currentVoltage = +(localStorage.getItem("Main Battery Voltage"));
+if (currentVoltage === "" || currentVoltage === undefined) currentVoltage = 48.1;  
+let currentTime = new Date().toLocaleTimeString();
+dataPointsVoltage.push(currentVoltage);
+voltageData.labels.push(currentTime);
+voltageChart.update();
+}
+
+function addDataVoltage() {
+    let updateFromLocalVoltage = localStorage.getItem("Main Battery Voltage");   
+    currentVoltage += Math.random() * (2*(+updateFromLocalVoltage/100)) - (+updateFromLocalVoltage/100);
+    if(currentVoltage > +updateFromLocalVoltage/2) currentVoltage - 2*(+updateFromLocalVoltage/100); 
+    if(currentVoltage < +updateFromLocalVoltage/-2) currentVoltage + 2*(+updateFromLocalVoltage/100); 
+    currentTime = new Date().toLocaleTimeString();
+
+    if (dataPointsVoltage.length >= 10) {
+        dataPointsVoltage.shift();
+        voltageData.labels.shift();
+    }
+
+    localStorage.setItem("Main Battery Voltage", (currentVoltage).toFixed(1));
+    document.getElementById("mainBatteryVoltage").innerHTML = localStorage.getItem("Main Battery Voltage"); 
+    dataPointsVoltage.push(currentVoltage);
+    voltageData.labels.push(currentTime);
+    voltageChart.update();
+}
+setInterval(addDataVoltage, 1000);
 
   } //Bottom of window onload function 
 
-function locallyStore()  { 
-  var retrieveMotorTemp = document.getElementById("motor-temperature").value; 
-  if(retrieveMotorTemp != undefined && retrieveMotorTemp != '') var motorTemperature = localStorage.setItem("Motor Temperature", retrieveMotorTemp);
-
+function locallyStore()  {  //Beginning of local storage function
   var retrieveLocationRight = document.getElementById("location-right").value; 
   if(retrieveLocationRight != undefined && retrieveLocationRight != '')  {
   var locationRight = localStorage.setItem("Location Right", retrieveLocationRight);
@@ -119,11 +274,68 @@ function locallyStore()  {
   if(retrieveEventLeft != undefined && retrieveEventLeft != '') {  
   var eventLeft = localStorage.setItem("Event Left", retrieveEventLeft);
   document.getElementById("eventLeft").innerHTML = localStorage.getItem("Event Left"); }
+
+  var retrieveFrictionBrakes = document.getElementById("friction-brakes").value; 
+  if(retrieveFrictionBrakes != undefined && retrieveFrictionBrakes != '') {  
+  var frictionBrakes = localStorage.setItem("Friction Brakes Temperature", retrieveFrictionBrakes);
+  document.getElementById("frictionBrakes").innerHTML = localStorage.getItem("Friction Brakes Temperature"); }
+
+  var retrieveElectricBrakes = document.getElementById("electric-brakes").value; 
+  if(retrieveElectricBrakes != undefined && retrieveElectricBrakes != '') {  
+  var ElectricBrakes = localStorage.setItem("Electric Brakes Temperature", retrieveElectricBrakes);
+  document.getElementById("electricBrakes").innerHTML = localStorage.getItem("Electric Brakes Temperature"); }
+
+  var retrieveMainBattery = document.getElementById("main-battery").value; 
+  if(retrieveMainBattery != undefined && retrieveMainBattery != '') {  
+  var MainBattery = localStorage.setItem("Main Battery Temperature", retrieveMainBattery);
+  document.getElementById("mainBattery").innerHTML = localStorage.getItem("Main Battery Temperature"); }
+
+  var retrieveMotorTemperature = document.getElementById("motor-temperature").value; 
+  if(retrieveMotorTemperature != undefined && retrieveMotorTemperature != '') {  
+  var MotorTemperature = localStorage.setItem("Motor Temperature", retrieveMotorTemperature);
+  document.getElementById("motor").innerHTML = localStorage.getItem("Motor Temperature"); }
+
+  var retrieveLiquidCooling = document.getElementById("liquid-cooling").value; 
+  if(retrieveLiquidCooling != undefined && retrieveLiquidCooling != '') {  
+  var LiquidCooling = localStorage.setItem("Liquid Cooling Temperature", retrieveLiquidCooling);
+  document.getElementById("liquidCooling").innerHTML = localStorage.getItem("Liquid Cooling Temperature"); }
+
+  var retrieve24VBattery = document.getElementById("24v-battery").value; 
+  if(retrieve24VBattery != undefined && retrieve24VBattery != '') {  
+  var TwentyFourVBattery = localStorage.setItem("24V Battery Temperature", retrieve24VBattery);
+  document.getElementById("24VBattery").innerHTML = localStorage.getItem("24V Battery Temperature"); }
+
+  var retrieveMainBatteryVoltage = document.getElementById("main-battery-voltage").value; 
+  if(retrieveMainBatteryVoltage != undefined && retrieveMainBatteryVoltage != '') {  
+  var MainBatteryVoltage = localStorage.setItem("Main Battery Voltage", retrieveMainBatteryVoltage);
+  document.getElementById("mainBatteryVoltage").innerHTML = localStorage.getItem("Main Battery Voltage"); }
+
+  var retrieve24VBatteryVoltage = document.getElementById("24v-battery-voltage").value; 
+  if(retrieve24VBatteryVoltage != undefined && retrieve24VBatteryVoltage != '') {  
+  var TwentyVBatteryVoltage = localStorage.setItem("24V Battery Voltage", retrieve24VBatteryVoltage);
+  document.getElementById("24VBatteryVoltage").innerHTML = localStorage.getItem("24V Battery Voltage"); }
+
+  var retrieve5VConverterVoltage = document.getElementById("5v-converter-voltage").value; 
+  if(retrieve5VConverterVoltage != undefined && retrieve5VConverterVoltage != '') {  
+  var FiveVoltConverterVoltage = localStorage.setItem("5V Converter Voltage", retrieve5VConverterVoltage);
+  document.getElementById("5VConverterVoltage").innerHTML = localStorage.getItem("5V Converter Voltage"); }
+
+  var retrieve12VConverterVoltage = document.getElementById("12v-converter-voltage").value; 
+  if(retrieve12VConverterVoltage != undefined && retrieve12VConverterVoltage != '') {  
+  var TwelveVoltConverterVoltage = localStorage.setItem("12V Converter Voltage", retrieve12VConverterVoltage);
+  document.getElementById("12VConverterVoltage").innerHTML = localStorage.getItem("12V Converter Voltage"); }
+  
+  var retrieveAirTankPressure = document.getElementById("air-tank-pressure").value; 
+  if(retrieveAirTankPressure != undefined && retrieveAirTankPressure != '') {  
+  var airTankPressure = localStorage.setItem("Air Tank Pressure", retrieveAirTankPressure);
+  document.getElementById("airTankPressure").innerHTML = localStorage.getItem("Air Tank Pressure"); }
+
+  var retrieveVesselPressure = document.getElementById("vessel-pressure").value; 
+  if(retrieveVesselPressure != undefined && retrieveVesselPressure != '') {  
+  var vesselPressure = localStorage.setItem("Vessel Pressure", retrieveVesselPressure);
+  document.getElementById("vesselPressure").innerHTML = localStorage.getItem("Vessel Pressure"); }
   
   document.getElementById("menuSidebar").hidden = false; 
   document.getElementById("menuMiddle").hidden = false; 
   document.getElementById("inputsMiddle").style.display = "none"; 
-}
-
-
-
+} //end of local storage function

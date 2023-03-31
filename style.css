@@ -79,7 +79,6 @@ nav{
     padding-top: 10px;
 }
 
-
 /* left sider bar menu*/
 .left-sidebar{
     top: 60px;
@@ -325,11 +324,33 @@ nav{
     top: 250px; 
     width: 800px;
     height: 700px; 
-    border: solid white 1px; 
+    color: white; 
 }
 
 .telemetry {
-    
+width: 800px;   
+position: absolute; 
+}
+
+.telemetry p {
+padding-left: 15px; 
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+font-size: 26px; 
+padding-bottom: 6px; 
+border-bottom: solid white 2px; 
+}
+
+#motorGraph {
+max-height: 250px;
+}
+
+#batteryGraph {
+max-height: 250px;
+top: 350px; 
+}
+
+#speedGraph {
+    padding: 0 20px;
 }
 
 .divider {
@@ -337,7 +358,7 @@ nav{
     width: 2px; 
     height: 500px; 
     border-right: solid white 2px; 
-    left: 855px; 
+    left: 880px; 
     top: 100px; 
 }
 
