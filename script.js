@@ -231,6 +231,46 @@ function addDataVoltage() {
     voltageChart.update();
 }
 setInterval(addDataVoltage, 1000);
+// end of graph voltage
+
+// start of battery tracker
+
+let batteryLevel = 100;
+const data = {
+  datasets: [{
+    data: [batteryLevel, 100-batteryLevel],
+    backgroundColor: ['white', '#111016'],
+    borderWidth: 0,
+    hoverBackgroundColor: ['rgba(238,188,49,255)', '#111016']
+  }]
+};
+
+const options = {
+  responsive: false,
+  cutout: '80%',
+  rotation: Math.PI / 2,
+  circumference: 114.6 * Math.PI,
+};
+
+const chart = new Chart('battery-chart', {
+  type: 'doughnut',
+  data: data,
+  options: options
+});
+
+setInterval(() => {
+  if (batteryLevel > 0) {
+    batteryLevel -= 1;
+    chart.data.datasets[0].data[0] = batteryLevel;
+    chart.data.datasets[0].data[1] = 100 - batteryLevel;
+    chart.update();
+  } else {
+    clearInterval(intervalId);
+  }
+}, 1000);
+
+
+//end of battery tracker 
 
   } //Bottom of window onload function 
 
