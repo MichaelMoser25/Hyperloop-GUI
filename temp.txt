@@ -1,1 +1,107 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Alerts Page</title>
+	<style type="text/css">
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f1f1f1;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+		
+		h1 {
+			color: #333;
+			font-size: 36px;
+			margin-top: 0;
+			text-align: center;
+		}
+		
+		.alert {
+			background-color: #fff;
+			border: 2px solid #333;
+			border-radius: 10px;
+			margin-bottom: 20px;
+			padding: 20px;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+		}
+		
+		.alert h2 {
+			color: #333;
+			font-size: 24px;
+			margin-top: 0;
+			margin-bottom: 10px;
+		}
+		
+		.alert p {
+			color: #666;
+			font-size: 18px;
+			margin: 0;
+		}
+		
+		.alert.success {
+			border-color: #4CAF50;
+		}
+		
+		.alert.success h2 {
+			color: #4CAF50;
+		}
+		
+		.alert.warning {
+			border-color: #FF9800;
+		}
+		
+		.alert.warning h2 {
+			color: #FF9800;
+		}
+		
+		.alert.error {
+			border-color: #f44336;
+		}
+		
+		.alert.error h2 {
+			color: #f44336;
+		}
+		
+		.alert.info {
+			border-color: #2196F3;
+		}
+		
+		.alert.info h2 {
+			color: #2196F3;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Alerts Page</h1>
+		
+		<div class="alert success">
+			<h2>Success!</h2>
+			<p>Your request has been processed.</p>
+		</div>
+		
+		<div class="alert warning">
+			<h2>Warning!</h2>
+			<p>Your session will expire in 5 minutes.</p>
+		</div>
+		
+		<div class="alert error">
+			<h2>Error!</h2>
+			<p>An unexpected error occurred. Please try again later.</p>
+		</div>
+		
+		<div class="alert info">
+			<h2>Info:</h2>
+			<p>This page is under construction.</p>
+		</div>
+	</div>
+</body>
+</html>
