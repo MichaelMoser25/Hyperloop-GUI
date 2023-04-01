@@ -105,3 +105,20 @@
 	</div>
 </body>
 </html>
+------------------
+<button onclick="showErrorMessage()">Click me to show error message</button>
+<div id="error-message" style="display:none;">There was an error!</div>
+
+
+
+function showErrorMessage() {
+  // Display the error message
+  var errorMessage = document.getElementById("error-message");
+  errorMessage.style.display = "block";
+  
+  // Set a timer to remove the error message after 3 seconds
+  setTimeout(function() {
+    errorMessage.style.display = "none";
+  }, 3000);
+}
+When the button is clicked, the showErrorMessage function will be called, which will display the error message by changing its CSS display property to "block". Then, a timer is set using the setTimeout function to hide the error message after 3 seconds by changing its display property back to "none".
