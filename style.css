@@ -252,34 +252,43 @@ nav{
 .trip-progress div {
     height: 10px; 
     width: 0%; 
-    background: grey; 
+    background: rgba(238,188,49,255); 
     border-radius: 3px;
 }
 
-.trip-progress div span {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%; 
-    background: black; 
-    float: right; 
-    margin-top: -15px; 
-    margin-right: -20px; 
-    color: white; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    border: 2px solid red;  
+
+.trip-progress div img {
+    width: 150px; 
+    position: relative; 
+    bottom: 18px; 
+    float: right;
+    left: 6px; 
 }
 
 .pod-distance {
-    animation: pod-distance 1s linear forwards;
+    animation: pod-distance 3s linear forwards;
 }
 
 @keyframes pod-distance {
     100%{
-        width: 50%; 
+        width: 75%; 
     }
 }
+
+#battery-container {
+    position: absolute; 
+    right: 0px; 
+    width: 300px;
+    height: 300px; 
+}
+  #battery-container h1 {
+    color: white; 
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    position: relative; 
+    top: -210px;
+    right: -85px; 
+    font-size: 50px;
+  }
 
 /* #speedometer {
 	width: 300px;
