@@ -122,3 +122,147 @@ function showErrorMessage() {
   }, 3000);
 }
 When the button is clicked, the showErrorMessage function will be called, which will display the error message by changing its CSS display property to "block". Then, a timer is set using the setTimeout function to hide the error message after 3 seconds by changing its display property back to "none".
+---------------Notes 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Notes Page</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>My Notes</h1>
+		<form>
+			<label for="title">Title:</label>
+			<input type="text" id="title" placeholder="Enter a title">
+			<label for="content">Content:</label>
+			<textarea id="content" placeholder="Enter note content"></textarea>
+			<button type="button" onclick="saveNote()">Save</button>
+		</form>
+		<div id="notes">
+			<!-- notes will be displayed here -->
+		</div>
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
+.container {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+h1 {
+	text-align: center;
+}
+
+form {
+	margin-bottom: 20px;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #3e8e41;
+}
+
+.note {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.note h2 {
+	margin-top: 0;
+}
+
+.note p {
+	margin-bottom: 0;
+}
+
+.delete {
+	float: right;
+	cursor: pointer;
+}
+let notes = [];
+
+function saveNote() {
+	// get values from input fields
+	let title = document.getElementById("title").value;
+	let content = document.getElementById("content").value;
+
+	// create note object and add to notes array
+	let note = {title: title, content: content};
+	notes.push(note);
+
+	// clear input fields
+	document.getElementById("title").value = "";
+	document.getElementById("content").value = "";
+
+	// display notes on page
+	displayNotes();
+}
+
+function displayNotes() {
+	let notesDiv = document.getElementById("notes");
+
+	// clear notes div
+	notesDiv.innerHTML = "";
+
+	// loop through notes array and create note elements
+	for (let i = 0; i < notes.length; i++) {
+		let note = notes[i];
+
+		// create note element
+		let noteDiv = document.createElement("div");
+		noteDiv.classList.add("note");
+
+		let title = document.createElement("h2");
+		title.textContent = note.title;
+
+		let content = document.createElement("p");
+		content.textContent = note.content;
+
+		let deleteButton = document.createElement("span");
+		deleteButton.classList.add("delete");
+		deleteButton.textContent = "Delete";
+		deleteButton.addEventListener("click", function() {
+			deleteNote(i);
+		});
+
+		// add note elements to note div
+		noteDiv.appendChild(title);
+		noteDiv.appendChild(content);
+		noteDiv.appendChild(deleteButton);
+
+		// add note div to notes div
+		notesDiv.appendChild(noteDiv);
+	}
+}
+
+function deleteNote(index) {
+	notes.splice
