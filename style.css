@@ -239,6 +239,7 @@ nav{
 .speedometer-container {
     width: 400px;
     height: 400px;
+    top: 60px; 
     position: relative;
   }
   
@@ -297,11 +298,56 @@ nav{
     color: grey;
 }
 
+#accelerationGraph {
+    position: absolute; 
+    top: 525px; 
+    left: 100px; 
+    border-bottom: solid #111016 1px;
+    border-left: solid #111016 1px;
+}
 
+#rpmGraph {
+    position: absolute; 
+    top: 525px; 
+    right: 600px; 
+    border-bottom: solid #111016 1px;
+    border-left: solid #111016 1px;
+}
+
+.navigationButtons {
+    position: absolute; 
+    height: 150px; 
+    width: 150px; 
+    background-color: #111016 ;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer; 
+}
+
+.navigationButtons p {
+    position: relative;
+    top: 18px; 
+    font-size: 35px;
+    font-weight: bold;
+}
+
+#start {
+top: 200px; 
+left: 50px; 
+background-color: #111016 ;
+cursor: pointer; 
+z-index: 1;
+}
+
+#stop {
+top: 200px; 
+left: 800px; 
+z-index: 1;
+}
 
 .trip-bar {
     position: absolute; 
-    bottom: 20px; 
+    bottom: 0px; 
     left: -50px; 
 }
 

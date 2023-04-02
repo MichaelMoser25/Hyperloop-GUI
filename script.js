@@ -1,7 +1,6 @@
 window.onload = function() {
 
-    //start of page visibility
-
+    //start of page functionality
     const homeButton = document.getElementById("homeLogo");
     homeButton.addEventListener('click', function() {
       document.getElementById("alertsMiddle").style.display = "none"
@@ -27,8 +26,6 @@ window.onload = function() {
       document.getElementById("menu-middle").style.display = "none"
       document.getElementById("podsystemMiddle").style.display = "flex"
       document.getElementById("podsystemSidebar").style.display = "flex"
-      startupTemp(); 
-      startupVoltage(); 
     });
 
     const inputs = document.getElementById("alerts");
@@ -45,7 +42,16 @@ window.onload = function() {
       document.getElementById("menu-middle").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "flex"
     });
-    //end of page visibility
+
+    const saveChanges = document.getElementById("saveChanges");
+    saveChanges.addEventListener('click', function() {
+      console.log("hello"); 
+      startupTemp(); 
+      startupVoltage(); 
+      startupAcceleration(); 
+      startupRPM(); 
+    });
+    //end of page functionality
 
 //Start at local storage conditionals
 if(localStorage.getItem("Location Right")!= undefined) {
@@ -122,10 +128,160 @@ if(localStorage.getItem("Trip Distance")!= undefined) {
 }
 //end of local storage conditionals
 
+//navigation buttons
+
+const start = document.getElementById("start");
+    start.addEventListener('click', function() {
+      console.log("started"); 
+    });
+
+const stop = document.getElementById("stop");
+    stop.addEventListener('click', function() {
+      console.log("stopped"); 
+    });    
+
+//end of navigation buttons 
 
 //start of graph acceleration
+let accelerationCanvas = document.getElementById("accelerationGraph");
+let dataPointsAcceleration = [];
+let accelerationData = {
+    labels: [],
+    datasets: [{
+        label: "Acceleration",
+        data: dataPointsAcceleration,
+        borderColor: "grey",
+        pointRadius: 3
+    }]
+};
 
+let chartOptionsAcceleration = {
+    maintainAspectRatio: false,
+    responsive: false, 
+    scales: {
+      x: {
+          ticks: {
+              display: false
+          }
+      },
+      y: {
+        ticks: {
+            display: false
+        }
+    }
+  }
+};
+
+let accelerationChart = new Chart(accelerationCanvas, {
+    type: 'line',
+    data: accelerationData,
+    options: chartOptionsAcceleration,
+});
+
+let currentAcceleration = +(localStorage.getItem("Acceleration"));
+if (currentAcceleration === "" || currentAcceleration === undefined || currentAcceleration === 0.0) currentAcceleration = 3.7;  
+let currentTime = new Date().toLocaleTimeString();
+
+function startupAcceleration() { 
+currentAcceleration = +(localStorage.getItem("Acceleration"));
+if (currentAcceleration === "" || currentAcceleration === undefined || currentAcceleration === 0.0) currentAcceleration = 3.7;  
+let currentTime = new Date().toLocaleTimeString();
+dataPointsAcceleration.push(currentAcceleration);
+accelerationData.labels.push(currentTime);
+accelerationChart.update();
+}
+
+function addDataAcceleration() {
+    let updateFromLocalAcceleration = localStorage.getItem("Acceleration");   
+    currentAcceleration += Math.random() * (2*(+updateFromLocalAcceleration/100)) - (+updateFromLocalAcceleration/100);
+    if(currentAcceleration > +updateFromLocalAcceleration/2) currentAcceleration - 2*(+updateFromLocalAcceleration/100); 
+    if(currentAcceleration < +updateFromLocalAcceleration/-2) currentAcceleration + 2*(+updateFromLocalAcceleration/100); 
+    currentTime = new Date().toLocaleTimeString();
+
+    if (dataPointsAcceleration.length >= 10) {
+        dataPointsAcceleration.shift();
+        accelerationData.labels.shift();
+    }
+
+    localStorage.setItem("Acceleration", (currentAcceleration).toFixed(1));
+    document.getElementById("acceleration").innerHTML = localStorage.getItem("Acceleration"); 
+    dataPointsAcceleration.push(currentAcceleration);
+    accelerationData.labels.push(currentTime);
+    accelerationChart.update();
+}
+setInterval(addDataAcceleration, 500);
 //end of graph acceleration
+
+//start of graph rpm
+let rpmCanvas = document.getElementById("rpmGraph");
+let dataPointsRPM = [];
+let rpmData = {
+    labels: [],
+    datasets: [{
+        label: "RPM",
+        data: dataPointsRPM,
+        borderColor: "grey",
+        pointRadius: 3
+    }]
+};
+
+let chartOptionsRPM = {
+    maintainAspectRatio: false,
+    responsive: false, 
+    scales: {
+      x: {
+          ticks: {
+              display: false
+          }
+      },
+      y: {
+        ticks: {
+            display: false
+        }
+    }
+  }
+};
+
+let rpmChart = new Chart(rpmCanvas, {
+    type: 'line',
+    data: rpmData,
+    options: chartOptionsRPM,
+});
+
+let currentRPM = +(localStorage.getItem("RPM"));
+if (currentRPM === "" || currentRPM === undefined || currentRPM === 0.0) currentRPM = 3.7;  
+currentTime = new Date().toLocaleTimeString();
+
+function startupRPM() { 
+currentRPM = +(localStorage.getItem("RPM"));
+if (currentRPM === "" || currentRPM === undefined || currentRPM === 0.0) currentRPM = 3.7;  
+let currentTime = new Date().toLocaleTimeString();
+dataPointsRPM.push(currentRPM);
+rpmData.labels.push(currentTime);
+rpmChart.update();
+}
+
+function addDataRPM() {
+    let updateFromLocalRPM = localStorage.getItem("RPM");   
+    currentRPM += Math.random() * (2*(+updateFromLocalRPM/100)) - (+updateFromLocalRPM/100);
+    if(currentRPM > +updateFromLocalRPM/2) currentRPM - 2*(+updateFromLocalRPM/100); 
+    if(currentRPM < +updateFromLocalRPM/-2) currentRPM + 2*(+updateFromLocalRPM/100); 
+    currentTime = new Date().toLocaleTimeString();
+
+    if (dataPointsRPM.length >= 10) {
+        dataPointsRPM.shift();
+        rpmData.labels.shift();
+    }
+
+    localStorage.setItem("RPM", (currentRPM).toFixed(1));
+    document.getElementById("rpm").innerHTML = localStorage.getItem("RPM"); 
+    dataPointsRPM.push(currentRPM);
+    rpmData.labels.push(currentTime);
+    rpmChart.update();
+}
+setInterval(addDataRPM, 500);
+//end of graph rpm
+
 //start of graph creation temperature
 let tempCanvas = document.getElementById("tempGraph");
 let dataPointsTemp = [];
@@ -151,7 +307,7 @@ let tempChart = new Chart(tempCanvas, {
 
 let currentTemp = +(localStorage.getItem("Motor Temperature"));
 if (currentTemp === "" || currentTemp === undefined || currentTemp === 0.0) currentTemp = 45;  
-let currentTime = new Date().toLocaleTimeString();
+currentTime = new Date().toLocaleTimeString();
 
 function startupTemp() { 
 currentTemp = +(localStorage.getItem("Motor Temperature"));
@@ -302,7 +458,7 @@ setInterval(function() {
 }, 1000);
 
 //end of speedometer
-  } //Bottom of window onload function 
+} //Bottom of window onload function 
 
 function locallyStore()  {  //Beginning of local storage function
   var retrieveLocationRight = document.getElementById("location-right").value; 
@@ -429,3 +585,4 @@ function locallyStore()  {  //Beginning of local storage function
   document.getElementById("menu-middle").style.display = "flex"
   document.getElementById("inputsMiddle").style.display = "none"; 
 } //end of local storage function
+
