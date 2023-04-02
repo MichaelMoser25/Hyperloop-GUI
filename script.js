@@ -436,7 +436,8 @@ setInterval(() => {
     }
     chart.update();
   }  else {
-    clearInterval(intervalId);
+    console.log("battery dead"); 
+    clearInterval();
   }
 }, 5000);
 //end of battery tracker 
@@ -585,4 +586,3 @@ function locallyStore()  {  //Beginning of local storage function
   document.getElementById("menu-middle").style.display = "flex"
   document.getElementById("inputsMiddle").style.display = "none"; 
 } //end of local storage function
-
