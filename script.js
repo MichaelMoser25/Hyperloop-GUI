@@ -122,6 +122,10 @@ if(localStorage.getItem("Trip Distance")!= undefined) {
 }
 //end of local storage conditionals
 
+
+//start of graph acceleration
+
+//end of graph acceleration
 //start of graph creation temperature
 let tempCanvas = document.getElementById("tempGraph");
 let dataPointsTemp = [];
