@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="style.css"> 
     <script src="https://kit.fontawesome.com/2910d20e55.js" crossorigin="anonymous"></script>
     <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
     <link rel="icon" href="favicon1.png" type ="image/x-icon">
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <nav>
         <div class="nav-left">
-            <a href="index.html"><img src="logo1.png" class="logo"></a>
+            <img id="homeLogo" src="logo1.png" class="logo">
         
         </div>  
         <div class="event">
@@ -58,8 +58,8 @@
         </div>
         
         <!-----Menu Center Content----->
-        <div class ="menu-middle">
-            <div id="menuMiddle">
+        <div class ="menu-middle" id="menu-middle">
+            <div>
                 <div id="dashboard" class="button">
                     <span>DASHBOARD</span>
                 </div>
@@ -86,17 +86,45 @@
                 <div class="trip-progress"> 
                     <div class="pod-distance"><img src="podIcon.png"></div>
                 </div>
+                <p id="startPosition">0</p>
+                <p id="tripDistance">10000</p>
             </div>
-            <div id="battery-container">
-                <canvas id="battery-chart"></canvas>
-                <h1>99%</h1>
-            </div>
-        
-                <!-- <div id="speedometer">
-                    <div class="speedometer-needle"></div>
-                    <div class="speedometer-center"></div>
+            <div class="speedometer-container">
+                <div class="speedometer">
+                  <div class="dial"></div>
+                  <div class="needle"></div>
+                  <div class="speedometer-text">
+                    <span class="value">0</span>
+                    <span class="unit">km/h</span>
+                  </div>
                 </div>
-                <div id="speedometer-value"></div> -->
+              </div>
+            <div id="battery-container">
+                <p class="data-header">Main Battery Life</p>
+                <canvas id="battery-chart"></canvas>
+                <h1 id="batteryLevel">100%</h1>
+            </div>
+            <div class="sensor-data" id="navigationData">
+                <p class="data-header">Navigation</p>
+                <div class="data-holder">
+                    <div class="data-text">
+                        <p class="data-name">RPM (r/min):</p>
+                        <p class="data-value" id="rpm">120</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">Acceleration (m/s<sup>2</sup>):</p>
+                        <p class="data-value" id="acceleration">3.7</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">Trip Distance (m):</p>
+                        <p class="data-value" id="travelledDistance">156</p>
+                    </div>
+                    <div class="data-text">
+                        <p class="data-name">Speed (km/h):</p>
+                        <p class="data-value" id="speed">40</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-----Pod System Center Content----->
@@ -206,10 +234,10 @@
             <div id="inputsMiddle">
                 <form>
                 <fieldset>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
-                    <label for="motor-temperature">Motor Temperature<input id="motor-temperature" name="motor-temperature" type="text" placeholder="input degrees celcius" maxlength="4"/></label>
+                    <label for="trip-distance">Trip Distance<input id="trip-distance" name="trip-distance" type="text" placeholder="input meters" maxlength="6"/></label>
+                    <label for="acceleration-value">Acceleration<input id="acceleration-value" name="acceleration-value" type="text" placeholder="input meters per second squared" maxlength="4"/></label>
+                    <label for="speed-value">Speed<input id="speed-value" name="speed-value" type="text" placeholder="input kilometers per hour" maxlength="5"/></label>
+                    <label for="rpm-value">Revolutions Per Minute<input id="rpm-value" name="rpm-value" type="text" placeholder="input revolutions per minute" maxlength="5"/></label>
                     <label for="vessel-pressure">Vessel Pressure<input id="vessel-pressure" name="vessel-pressure" type="text" placeholder="input kilopascals" maxlength="4"/></label>
                     <label for="air-tank-pressure">Air Tank Pressure<input id="air-tank-pressure" name="air-tank-pressure" type="text" placeholder="input kilopascals" maxlength="4"/></label>
                     <label for="12v-converter-voltage">12V Converter Voltage<input id="12v-converter-voltage" name="12v-converter-voltage" type="text" placeholder="input voltage" maxlength="4"/></label>

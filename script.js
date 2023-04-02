@@ -1,18 +1,30 @@
 window.onload = function() {
 
     //start of page visibility
+
+    const homeButton = document.getElementById("homeLogo");
+    homeButton.addEventListener('click', function() {
+      document.getElementById("alertsMiddle").style.display = "none"
+      document.getElementById("alertsSidebar").style.display = "none"
+      document.getElementById("inputsMiddle").style.display = "none"
+      document.getElementById("podsystemMiddle").style.display = "none"
+      document.getElementById("podsystemSidebar").style.display = "none"
+      document.getElementById("menuSidebar").style.display = "flex"
+      document.getElementById("menu-middle").style.display = "flex"
+      document.getElementById("dashboardMiddle").style.display = "none"
+    });
+
     const dashboard = document.getElementById("dashboard");
     dashboard.addEventListener('click', function() {
-      document.getElementById("menuSidebar").hidden = true
-      document.getElementById("menuMiddle").hidden = true
+      document.getElementById("menuSidebar").style.display = "none"
+      document.getElementById("menu-middle").style.display = "none"
       document.getElementById("dashboardMiddle").style.display = "flex"
-      document.getElementById("dashboardSidebar").style.display = "flex"
     });
 
     const alerts = document.getElementById("podSystem");
     alerts.addEventListener('click', function() {
-      document.getElementById("menuSidebar").hidden = true
-      document.getElementById("menuMiddle").hidden = true
+      document.getElementById("menuSidebar").style.display = "none"
+      document.getElementById("menu-middle").style.display = "none"
       document.getElementById("podsystemMiddle").style.display = "flex"
       document.getElementById("podsystemSidebar").style.display = "flex"
       startupTemp(); 
@@ -21,40 +33,19 @@ window.onload = function() {
 
     const inputs = document.getElementById("alerts");
     inputs.addEventListener('click', function() {
-      document.getElementById("menuSidebar").hidden = true
-      document.getElementById("menuMiddle").hidden = true
+      document.getElementById("menuSidebar").style.display = "none"
+      document.getElementById("menu-middle").style.display = "none"
       document.getElementById("alertsMiddle").style.display = "flex"
       document.getElementById("alertsSidebar").style.display = "flex"
     });
 
     const podSystem = document.getElementById("inputs");
     podSystem.addEventListener('click', function() {
-      document.getElementById("menuSidebar").hidden = true
-      document.getElementById("menuMiddle").hidden = true
+      document.getElementById("menuSidebar").style.display = "none"
+      document.getElementById("menu-middle").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "flex"
     });
     //end of page visibility
-
-    //start of speedometer
-//     var speedometer = document.getElementById("speedometer");
-//     var speedometerValue = document.getElementById("speedometer-value");
-//     var speed = 0;
-//     var maxSpeed = 180;
-
-// function updateSpeedometer() {
-// 	var angle = speed / maxSpeed * 180;
-// 	document.querySelector(".speedometer-needle").style.transform = "translateX(-50%) rotate(" + angle + "deg)";
-// 	speedometerValue.innerHTML = speed + " km/h";
-// }
-
-// setInterval(function() {
-// 	speed += Math.floor(Math.random() * 10) + 1;
-// 	if (speed > maxSpeed) {
-// 		speed = 0;
-// 	}
-// 	updateSpeedometer();
-// }, 1000);
-//end of speedometer 
 
 //Start at local storage conditionals
 if(localStorage.getItem("Location Right")!= undefined) {
@@ -116,6 +107,18 @@ if(localStorage.getItem("Vessel Pressure")!= undefined) {
 }
 if(localStorage.getItem("Motor Temperature")!= undefined) {
   document.getElementById("motor").innerHTML = localStorage.getItem("Motor Temperature"); 
+}
+if(localStorage.getItem("RPM")!= undefined) {
+  document.getElementById("rpm").innerHTML = localStorage.getItem("RPM"); 
+}
+if(localStorage.getItem("Speed")!= undefined) {
+  document.getElementById("speed").innerHTML = localStorage.getItem("Speed"); 
+}
+if(localStorage.getItem("Acceleration")!= undefined) {
+  document.getElementById("acceleration").innerHTML = localStorage.getItem("Acceleration"); 
+}
+if(localStorage.getItem("Trip Distance")!= undefined) {
+  document.getElementById("tripDistance").innerHTML = localStorage.getItem("Trip Distance"); 
 }
 //end of local storage conditionals
 
@@ -239,17 +242,17 @@ let batteryLevel = 100;
 const data = {
   datasets: [{
     data: [batteryLevel, 100-batteryLevel],
-    backgroundColor: ['white', '#111016'],
+    backgroundColor: ['#32CD32', '#111016'],
     borderWidth: 0,
-    hoverBackgroundColor: ['rgba(238,188,49,255)', '#111016']
+    hoverBackgroundColor: ['white', '#111016']
   }]
 };
 
 const options = {
   responsive: false,
   cutout: '80%',
-  rotation: Math.PI / 2,
-  circumference: 114.6 * Math.PI,
+  rotation: 0,
+  circumference: 360,
 };
 
 const chart = new Chart('battery-chart', {
@@ -261,17 +264,40 @@ const chart = new Chart('battery-chart', {
 setInterval(() => {
   if (batteryLevel > 0) {
     batteryLevel -= 1;
+    document.getElementById("batteryLevel").innerHTML = batteryLevel + "%"; 
     chart.data.datasets[0].data[0] = batteryLevel;
     chart.data.datasets[0].data[1] = 100 - batteryLevel;
+    if(batteryLevel <= 50 && batteryLevel >= 25) {
+    chart.data.datasets[0].backgroundColor = ['rgba(238,188,49,255)', '#111016']; 
+    chart.data.datasets[0].hoverBackgroundColor = ['white', '#111016']; 
+    } else if (batteryLevel <= 25) {
+    chart.data.datasets[0].backgroundColor = ['red', '#111016']; 
+    chart.data.datasets[0].hoverBackgroundColor = ['red', '#111016']; 
+    }
     chart.update();
-  } else {
+  }  else {
     clearInterval(intervalId);
   }
-}, 1000);
-
-
+}, 5000);
 //end of battery tracker 
 
+//start of speedometer
+
+const needle = document.querySelector('.needle');
+const value = document.querySelector('.value');
+const maxSpeed = 300;
+
+function updateSpeedometer(speed) { 
+  const angle = speed / maxSpeed * 270 - 135;
+  needle.style.transform = `rotate(${angle}deg)`;
+  value.innerHTML = speed.toFixed();
+}
+setInterval(function() {
+  let speed = Math.floor(Math.random() * (300 - 0 + 1)) + 0;
+  updateSpeedometer(speed);
+}, 1000);
+
+//end of speedometer
   } //Bottom of window onload function 
 
 function locallyStore()  {  //Beginning of local storage function
@@ -374,8 +400,28 @@ function locallyStore()  {  //Beginning of local storage function
   if(retrieveVesselPressure != undefined && retrieveVesselPressure != '') {  
   var vesselPressure = localStorage.setItem("Vessel Pressure", retrieveVesselPressure);
   document.getElementById("vesselPressure").innerHTML = localStorage.getItem("Vessel Pressure"); }
+
+  var retrieveSpeed = document.getElementById("speed-value").value; 
+  if(retrieveSpeed != undefined && retrieveSpeed != '') {  
+  var vesselSpeed = localStorage.setItem("Speed", retrieveSpeed);
+  document.getElementById("speed").innerHTML = localStorage.getItem("Speed"); }
+
+  var retrieveRPM = document.getElementById("rpm-value").value; 
+  if(retrieveRPM != undefined && retrieveRPM != '') {  
+  var rpmValue = localStorage.setItem("RPM", retrieveRPM);
+  document.getElementById("rpm").innerHTML = localStorage.getItem("RPM"); }
+
+  var retrieveAcceleration = document.getElementById("acceleration-value").value; 
+  if(retrieveAcceleration != undefined && retrieveAcceleration != '') {  
+  var rpmAcceleration = localStorage.setItem("Acceleration", retrieveAcceleration);
+  document.getElementById("acceleration").innerHTML = localStorage.getItem("Acceleration"); }
+
+  var retrieveTripDistance = document.getElementById("trip-distance").value; 
+  if(retrieveTripDistance != undefined && retrieveTripDistance != '') {  
+  var rpmTripDistance = localStorage.setItem("Trip Distance", retrieveTripDistance);
+  document.getElementById("tripDistance").innerHTML = localStorage.getItem("Trip Distance"); }
   
-  document.getElementById("menuSidebar").hidden = false; 
-  document.getElementById("menuMiddle").hidden = false; 
+  document.getElementById("menuSidebar").style.display = "flex"
+  document.getElementById("menu-middle").style.display = "flex"
   document.getElementById("inputsMiddle").style.display = "none"; 
 } //end of local storage function

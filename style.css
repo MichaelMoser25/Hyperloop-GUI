@@ -221,13 +221,74 @@ nav{
     width: 1500px; 
     height: 780px; 
     color: white; 
-    border: solid white 1px; 
 }
+
+.speedometer-container {
+    width: 400px;
+    height: 400px;
+    position: relative;
+  }
+  
+  .speedometer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #111016;
+    border-radius: 50%;
+    overflow: hidden;
+
+  }
+  
+  .dial {
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    background: black;
+    border-radius: 50%;
+  }
+  
+  .needle {
+    width: 6px;
+    height: 50%;
+    position: relative;
+    top: 0;
+    left: 50%;
+    background: rgba(238,188,49,255);
+    transform-origin: bottom center;
+    transform: rotate(0deg);
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .speedometer-text {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .value {
+    display: block;
+    font-size: 48px;
+    color: white;
+  }
+  
+  .unit {
+    display: block;
+    font-size: 24px;
+    color: grey;
+  }
 
 .trip-bar {
     position: absolute; 
     bottom: 20px; 
-    left: 75px; 
+    left: -50px; 
 }
 
 .trip-bar h2 {
@@ -262,7 +323,8 @@ nav{
     position: relative; 
     bottom: 18px; 
     float: right;
-    left: 6px; 
+    left: 2px; 
+    top: -33px; 
 }
 
 .pod-distance {
@@ -275,9 +337,25 @@ nav{
     }
 }
 
-#battery-container {
+#tripDistance {
     position: absolute; 
     right: 0px; 
+    top: -5px; 
+    font-size: 20px;
+}
+
+#startPosition {
+    position: absolute; 
+    left: 0px; 
+    top: -5px; 
+    font-size: 20px;
+}
+
+
+#battery-container {
+    position: absolute; 
+    right: 20px; 
+    top: 80px;
     width: 300px;
     height: 300px; 
 }
@@ -290,47 +368,25 @@ nav{
     font-size: 50px;
   }
 
-/* #speedometer {
-	width: 300px;
-	height: 300px;
-	border-radius: 50%;
-	border: 10px solid white;
-	position: relative;
-	margin: 50px auto;
+  #battery-container p {
+    position: absolute;
+    top: -110px; 
+    right: -20px; 
+    width: 350px; 
+  }
+
+  #navigationData {
+    position: absolute; 
+    top: 420px; 
+    right: 0;
+    width: 350px; 
 }
 
-.speedometer-needle {
-	width: 20px;
-	height: 150px;
-	background-color: blue;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform-origin: bottom center;
-	transform: translateX(-50%) rotate(0deg);
-	transition: transform 0.5s ease-in-out;
+#navigationData .data-text {
+    width: 165px; 
 }
-
-.speedometer-center {
-	width: 30px;
-	height: 30px;
-	background-color: white;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	border-radius: 50%;
-}
-
-#speedometer-value {
-	font-size: 50px;
-	text-align: center;
-	margin-top: 50px;
-    color: white; 
-} */
 
 /* main podsystem*/
-
 #podsystemMiddle {
     display: none; 
     position: absolute; 
@@ -408,7 +464,7 @@ top: 350px;
     left: 50px;
 }
 
-.sensor-data .data-header {
+.data-header {
     color: white; 
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 26px; 
