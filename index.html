@@ -83,10 +83,43 @@
             <canvas id="accelerationGraph"></canvas>
             <canvas id="rpmGraph"></canvas> 
             <div class="navigationButtons" id="stop"><p>Stop</p></div>
-            <div class="navigationButtons" id="start"><p>Start</p></div>
+            <div class="navigationButtons" id="start"><p>Launch</p></div>
+            <div class="navigationButtons" id="check"><p>Check</p></div>
+            <div class="navigationButtons" id="reset"><p>Reset</p></a></div>
+            <div class="pod-status" id="pod-status">
+                <div class="pod-mode" id="off">
+                    <h3>1</h3>
+                    <p>Off</p>
+                    <div class="initiation-line" id="off-line"></div>
+                </div>
+                <div class="pod-mode" id="armed">
+                    <h3>2</h3>
+                    <p>Armed</p>
+                    <div class="initiation-line" id="armed-line"></div>
+                </div>
+                <div class="pod-mode" id="accelerating">
+                    <h3>3</h3>
+                    <p>Accelerating</p>
+                    <div class="initiation-line" id="accelerating-line"></div>
+                </div>
+                <div class="pod-mode" id="coasting">
+                    <h3>4</h3>
+                    <p>Coasting</p>
+                    <div class="initiation-line" id="coasting-line"></div>
+                </div>
+                <div class="pod-mode" id="braking">
+                    <h3>5</h3>
+                    <p>Braking</p>
+                    <div class="initiation-line" id="braking-line"></div>
+                </div>
+                <div class="pod-mode" id="stopped">
+                    <h3>6</h3>
+                    <p>Stopped</p>
+                </div>
+            </div>
             <div class="trip-bar">
                 <div class="trip-progress"> 
-                    <div class="pod-distance"><img src="podIcon.png"></div>
+                    <div class="pod-distance" id="pod-distance"><img src="podIcon.png"></div>
                 </div>
                 <p id="startPosition">0</p>
                 <p id="tripDistance">10000</p>
@@ -120,7 +153,7 @@
                     </div>
                     <div class="data-text">
                         <p class="data-name">Trip Distance (m):</p>
-                        <p class="data-value" id="travelledDistance">156</p>
+                        <p class="data-value" id="travelledDistance">1560</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">Speed (km/h):</p>

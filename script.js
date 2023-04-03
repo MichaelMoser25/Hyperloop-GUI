@@ -1,5 +1,9 @@
 window.onload = function() {
 
+    //variables declared
+    let podStatus = "off";
+    //end of variable declaration
+
     //start of page functionality
     const homeButton = document.getElementById("homeLogo");
     homeButton.addEventListener('click', function() {
@@ -45,7 +49,6 @@ window.onload = function() {
 
     const saveChanges = document.getElementById("saveChanges");
     saveChanges.addEventListener('click', function() {
-      console.log("hello"); 
       startupTemp(); 
       startupVoltage(); 
       startupAcceleration(); 
@@ -129,18 +132,52 @@ if(localStorage.getItem("Trip Distance")!= undefined) {
 //end of local storage conditionals
 
 //navigation buttons
-
 const start = document.getElementById("start");
     start.addEventListener('click', function() {
-      console.log("started"); 
     });
 
 const stop = document.getElementById("stop");
     stop.addEventListener('click', function() {
-      console.log("stopped"); 
-    });    
+      document.getElementById("off-line").style.display = "flex"
+      document.getElementById("armed-line").style.display = "flex"
+      document.getElementById("accelerating-line").style.display = "flex"
+      document.getElementById("coasting-line").style.display = "flex"
+      document.getElementById("braking-line").style.display = "flex"
+      reset.style.zIndex = 2; 
+      stop.style.zIndex = 1; 
+      podStatus = "off"; 
+    });   
 
+const check = document.getElementById("check");
+    check.addEventListener('click', function() {
+      if (readyCheck() === true) {
+      document.getElementById("off-line").style.display = "flex"
+      document.getElementById("armed-line").style.display = "none"
+      document.getElementById("accelerating-line").style.display = "none"
+      document.getElementById("coasting-line").style.display = "none"
+      document.getElementById("braking-line").style.display = "none"
+      check.style.zIndex = 1; 
+      start.style.zIndex = 2; 
+        console.log("armed"); 
+      } else {
+        console.log("arming failed"); 
+      }
+    });    
+  
+const reset = document.getElementById("reset");
+    reset.addEventListener('click', function() {
+      location.reload(); 
+    });
 //end of navigation buttons 
+
+//start of pod image distance calculation
+function updatePodDistance () {
+const targetDistance = document.getElementById("tripDistance").innerHTML; 
+const travelledDistance = document.getElementById('travelledDistance').innerHTML;
+const podImageDistance = document.getElementById('pod-distance');
+podImageDistance.style.setProperty('--pod-width',((+travelledDistance)/(+targetDistance))*100 + '%');
+} 
+//end of pod image distance calculation 
 
 //start of graph acceleration
 let accelerationCanvas = document.getElementById("accelerationGraph");
@@ -179,12 +216,12 @@ let accelerationChart = new Chart(accelerationCanvas, {
 });
 
 let currentAcceleration = +(localStorage.getItem("Acceleration"));
-if (currentAcceleration === "" || currentAcceleration === undefined || currentAcceleration === 0.0) currentAcceleration = 3.7;  
+if (currentAcceleration === "" || currentAcceleration === undefined) currentAcceleration = 3.7;  
 let currentTime = new Date().toLocaleTimeString();
 
 function startupAcceleration() { 
 currentAcceleration = +(localStorage.getItem("Acceleration"));
-if (currentAcceleration === "" || currentAcceleration === undefined || currentAcceleration === 0.0) currentAcceleration = 3.7;  
+if (currentAcceleration === "" || currentAcceleration === undefined) currentAcceleration = 3.7;  
 let currentTime = new Date().toLocaleTimeString();
 dataPointsAcceleration.push(currentAcceleration);
 accelerationData.labels.push(currentTime);
@@ -209,7 +246,6 @@ function addDataAcceleration() {
     accelerationData.labels.push(currentTime);
     accelerationChart.update();
 }
-setInterval(addDataAcceleration, 500);
 //end of graph acceleration
 
 //start of graph rpm
@@ -249,12 +285,12 @@ let rpmChart = new Chart(rpmCanvas, {
 });
 
 let currentRPM = +(localStorage.getItem("RPM"));
-if (currentRPM === "" || currentRPM === undefined || currentRPM === 0.0) currentRPM = 3.7;  
+if (currentRPM === "" || currentRPM === undefined) currentRPM = 120;  
 currentTime = new Date().toLocaleTimeString();
 
 function startupRPM() { 
 currentRPM = +(localStorage.getItem("RPM"));
-if (currentRPM === "" || currentRPM === undefined || currentRPM === 0.0) currentRPM = 3.7;  
+if (currentRPM === "" || currentRPM === undefined) currentRPM = 120;  
 let currentTime = new Date().toLocaleTimeString();
 dataPointsRPM.push(currentRPM);
 rpmData.labels.push(currentTime);
@@ -279,7 +315,6 @@ function addDataRPM() {
     rpmData.labels.push(currentTime);
     rpmChart.update();
 }
-setInterval(addDataRPM, 500);
 //end of graph rpm
 
 //start of graph creation temperature
@@ -336,7 +371,6 @@ function addDataTemp() {
     tempData.labels.push(currentTime);
     tempChart.update();
 }
-setInterval(addDataTemp, 5000);
 //end of graph creation temperature
 
 //start of graph creation voltage
@@ -393,7 +427,6 @@ function addDataVoltage() {
     voltageData.labels.push(currentTime);
     voltageChart.update();
 }
-setInterval(addDataVoltage, 1000);
 // end of graph voltage
 
 // start of battery tracker
@@ -421,25 +454,6 @@ const chart = new Chart('battery-chart', {
   options: options
 });
 
-setInterval(() => {
-  if (batteryLevel > 0) {
-    batteryLevel -= 1;
-    document.getElementById("batteryLevel").innerHTML = batteryLevel + "%"; 
-    chart.data.datasets[0].data[0] = batteryLevel;
-    chart.data.datasets[0].data[1] = 100 - batteryLevel;
-    if(batteryLevel <= 50 && batteryLevel >= 25) {
-    chart.data.datasets[0].backgroundColor = ['rgba(238,188,49,255)', '#111016']; 
-    chart.data.datasets[0].hoverBackgroundColor = ['white', '#111016']; 
-    } else if (batteryLevel <= 25) {
-    chart.data.datasets[0].backgroundColor = ['red', '#111016']; 
-    chart.data.datasets[0].hoverBackgroundColor = ['red', '#111016']; 
-    }
-    chart.update();
-  }  else {
-    console.log("battery dead"); 
-    clearInterval();
-  }
-}, 5000);
 //end of battery tracker 
 
 //start of speedometer
@@ -453,12 +467,112 @@ function updateSpeedometer(speed) {
   needle.style.transform = `rotate(${angle}deg)`;
   value.innerHTML = speed.toFixed();
 }
-setInterval(function() {
-  let speed = Math.floor(Math.random() * (300 - 0 + 1)) + 0;
-  updateSpeedometer(speed);
-}, 1000);
 
 //end of speedometer
+
+//moving system checks start 
+
+function readyCheck () {
+  if (
+    +document.getElementById("speed").innerHTML === 0 &&
+    +document.getElementById("acceleration").innerHTML === 0 &&
+    +document.getElementById("rpm").innerHTML === 0 &&
+    batteryLevel >= 25 &&
+    podStatus === "off"
+    ) {
+    podStatus = "armed"; 
+    return true;
+    } else {
+      return false; 
+    }
+}
+
+function checkCondition() {
+  if (podStatus != "off") {
+    let speedInterval, batteryInterval, voltageInterval, tempInterval, rpmInterval, accelerationInterval, distanceInterval;
+
+    speedInterval = setInterval(function() {
+      if (podStatus != "off") {
+        let speed = Math.floor(Math.random() * (300 - 0 + 1)) + 0;
+        updateSpeedometer(speed);
+      } else {
+        clearInterval(speedInterval);
+      }
+    }, 1000);
+    
+    batteryInterval = setInterval(() => {
+      if (podStatus != "off") {
+        if (batteryLevel > 0) {
+          batteryLevel -= 1;
+          document.getElementById("batteryLevel").innerHTML = batteryLevel + "%"; 
+          chart.data.datasets[0].data[0] = batteryLevel;
+          chart.data.datasets[0].data[1] = 100 - batteryLevel;
+          if(batteryLevel <= 50 && batteryLevel >= 25) {
+            chart.data.datasets[0].backgroundColor = ['rgba(238,188,49,255)', '#111016']; 
+            chart.data.datasets[0].hoverBackgroundColor = ['white', '#111016']; 
+          } else if (batteryLevel <= 25) {
+            chart.data.datasets[0].backgroundColor = ['red', '#111016']; 
+            chart.data.datasets[0].hoverBackgroundColor = ['red', '#111016']; 
+          }
+          chart.update();
+        } else {
+          console.log("battery dead"); 
+          clearInterval(batteryInterval);
+        }
+      } else {
+        clearInterval(batteryInterval);
+      }
+    }, 5000);
+    
+    voltageInterval = setInterval(() => {
+      if (podStatus != "off") {
+        addDataVoltage();
+      } else {
+        clearInterval(voltageInterval);
+      }
+    }, 1000);
+    
+    tempInterval = setInterval(() => {
+      if (podStatus != "off") {
+        addDataTemp();
+      } else {
+        clearInterval(tempInterval);
+      }
+    }, 5000);
+    
+    rpmInterval = setInterval(() => {
+      if (podStatus != "off") {
+        addDataRPM();
+      } else {
+        clearInterval(rpmInterval);
+      }
+    }, 500);
+    
+    accelerationInterval = setInterval(() => {
+      if (podStatus != "off") {
+        addDataAcceleration();
+      } else {
+        clearInterval(accelerationInterval);
+      }
+    }, 500);
+    
+    distanceInterval = setInterval(() => {
+      if (podStatus != "off") {
+        updatePodDistance();
+      } else {
+        clearInterval(distanceInterval);
+      }
+    }, 1000); 
+
+  } else { 
+    setTimeout(checkCondition, 100); 
+  }
+}
+
+//function calls
+checkCondition(); 
+//end of function calls
+
 } //Bottom of window onload function 
 
 function locallyStore()  {  //Beginning of local storage function
@@ -574,12 +688,12 @@ function locallyStore()  {  //Beginning of local storage function
 
   var retrieveAcceleration = document.getElementById("acceleration-value").value; 
   if(retrieveAcceleration != undefined && retrieveAcceleration != '') {  
-  var rpmAcceleration = localStorage.setItem("Acceleration", retrieveAcceleration);
+  var Acceleration = localStorage.setItem("Acceleration", retrieveAcceleration);
   document.getElementById("acceleration").innerHTML = localStorage.getItem("Acceleration"); }
 
   var retrieveTripDistance = document.getElementById("trip-distance").value; 
   if(retrieveTripDistance != undefined && retrieveTripDistance != '') {  
-  var rpmTripDistance = localStorage.setItem("Trip Distance", retrieveTripDistance);
+  var TripDistance = localStorage.setItem("Trip Distance", retrieveTripDistance);
   document.getElementById("tripDistance").innerHTML = localStorage.getItem("Trip Distance"); }
   
   document.getElementById("menuSidebar").style.display = "flex"
