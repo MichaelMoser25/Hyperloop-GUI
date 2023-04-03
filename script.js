@@ -471,7 +471,6 @@ function updateSpeedometer(speed) {
 //end of speedometer
 
 //moving system checks start 
-
 function readyCheck () {
   if (
     +document.getElementById("speed").innerHTML === 0 &&
@@ -487,6 +486,7 @@ function readyCheck () {
     }
 }
 
+//if the system if not stopped, run the system
 function checkCondition() {
   if (podStatus != "off") {
     let speedInterval, batteryInterval, voltageInterval, tempInterval, rpmInterval, accelerationInterval, distanceInterval;
