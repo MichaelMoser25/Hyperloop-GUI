@@ -1,5 +1,7 @@
-:root {
+/* General Styling Applied Pagewide */
+:root { 
     --pod-width: 0%;
+    /* Variable used in determining pod icon position  */
 }
 
  *{
@@ -10,10 +12,12 @@
     max-height: 800px; 
 }
 
+/* General Body */
 body{
     background: black;
 }
 
+/* Nav */
 nav{
     display: flex;
     justify-content: space-between;
@@ -24,7 +28,6 @@ nav{
     min-height: 200px; 
 }
 
-/* Nav */
 .nav-left, .nav-right{
     display: flex;
     align-items: center
@@ -283,7 +286,7 @@ nav{
     text-align: center;
 }
   
-  .value {
+.value {
     display: block;
     font-size: 48px;
     color: white;
@@ -601,7 +604,6 @@ top: 350px;
     flex-wrap: wrap;
     margin-top: -15px; 
     margin-left: 20px; 
-    
 }
 
 .data-text {
@@ -694,7 +696,6 @@ top: 350px;
 .closebtn:hover {
     color: black;
 }
-
 
 /* main inputs*/
 #inputsMiddle {

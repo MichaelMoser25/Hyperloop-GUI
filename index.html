@@ -17,10 +17,10 @@
         <div class="nav-left">
             <img id="homeLogo" src="logo1.png" class="logo">
         </div>  
-	<!-----Create event----->
+	<!-----Create left event in the nav bar----->
         <div class="event">
             <div class="date">
-                <h2 id="dayLeft">3</h2>
+                <h2 id="dayLeft">4</h2>
                 <span id="monthLeft">April</span>
             </div>
             <div class="info">
@@ -29,7 +29,7 @@
                 <u><a href="https://queenshyperloop.ca/" target="_blank">More Info</a></u>
             </div>
         </div>
-	<!-----Create event----->
+	<!-----Create right event in the nav bar----->
         <div class="event">
             <div class="date">
                 <h2 id="dayRight">25</h2>
@@ -44,19 +44,19 @@
     </nav>
 
     <div class="container">
-        <!-----Left Sidebar----->
+        <!-----Left Sidebar (visible on all pages)----->
         <div class="left-siderbar">
             <div class="shortcuts">
                 <h4>Quick Access</h4>
                 <p id="returnHome"><i class="fa-solid fa-clock-rotate-left"></i> Return Home </p>
                 <p id="tripProgress"><i class="fa-solid fa-compass"></i> Trip Progress </p> 
                 <p id="podStatus"><i class="fa-solid fa-battery-half"></i> Pod Status </p> 
-                <p id="errors"><i class="fa-solid fa-triangle-exclamation"></i> Errors </p>
+                <p id="errors"><i class="fa-solid fa-triangle-exclamation"></i> Notifications </p>
                 <p id="userInputs"><i class="fa-solid fa-sliders"></i> User Inputs </p>
             </div>
         </div>
         
-        <!-----Menu Center Content----->
+        <!-----Menu Center Content (contains main buttons)----->
         <div class ="menu-middle" id="menu-middle">
             <div>
                 <div id="dashboard" class="button">
@@ -74,20 +74,23 @@
             </div>
         </div>
 
-        <!-----Menu Right Siderbar----->
+        <!-----Menu Right Siderbar (hyperloop pod image)----->
         <div class="menu-right-sidebar" id="menuSidebar">
                 <img src="qpod.png" class="qpod">
         </div>
 
         <!-----Dashboard Center Content----->
         <div class ="dashboard-middle" id="dashboardMiddle">
+            <!-- Acceleration and RPM graphs -->
             <canvas id="accelerationGraph"></canvas>
             <canvas id="rpmGraph"></canvas> 
+            <!-- Navigation Buttons (some appear stacked on top of eachother depending on situation) -->
             <div class="navigationButtons" id="stop"><p>Stop</p></div>
             <div class="navigationButtons" id="start"><p>Launch</p></div>
             <div class="navigationButtons" id="check"><p>Check</p></div>
             <div class="navigationButtons" id="reset"><p>Reset</p></a></div>
             <div class="navigationButtons" id="underway"></div>
+            <!-- Pod Status indicator below the navigation bar  -->
             <div class="pod-status" id="pod-status">
                 <div class="pod-mode" id="off">
                     <h3>1</h3>
@@ -120,6 +123,7 @@
                     <p>Stopped</p>
                 </div>
             </div>
+            <!-- Pod trip visualization bar  -->
             <div class="trip-bar">
                 <div class="trip-progress"> 
                     <div class="pod-distance" id="pod-distance"><img src="podIcon.png"></div>
@@ -127,6 +131,7 @@
                 <p id="startPosition">0</p>
                 <p id="tripDistance">10000</p>
             </div>
+            <!-- Speedometer and associated text/components -->
             <div class="speedometer-container">
                 <div class="speedometer">
                   <div class="dial"></div>
@@ -138,11 +143,13 @@
                 </div>
               </div>
               <div class="divider" id="dashboardDivider"></div>
+              <!-- Battery indicator -->
             <div id="battery-container">
                 <p class="data-header">Main Battery Life</p>
                 <canvas id="battery-chart"></canvas>
                 <h1 id="batteryLevel">100%</h1>
             </div>
+            <!-- Sensor data for the navigations on dashboard -->
             <div class="sensor-data" id="navigationData">
                 <p class="data-header">Navigation</p>
                 <div class="data-holder">
@@ -168,10 +175,12 @@
 
         <!-----Pod System Center Content----->
         <div class ="podsystem-middle" id="podsystemMiddle">
+            <!-- Motor Temperature Graph -->
                 <div class="telemetry" id="motorGraph">
                     <p>Motor Temperature Chart (°C)</p>
                     <canvas id="tempGraph"></canvas>
                 </div>
+            <!-- Main Battery Voltage Graph -->
                 <div class="telemetry" id="batteryGraph">
                     <p>Main Battery Voltage Chart (V)</p>
                     <canvas id="voltageGraph"></canvas>
@@ -181,6 +190,7 @@
 
         <!-----Pod System Right Sidebar----->
         <div class="podsystem-right-sidebar" id="podsystemSidebar">
+            <!-- All temperature related statistics -->
             <div class="sensor-data" id="temperatureData">
                 <p class="data-header">Temperature (°C)</p>
                 <div class="data-holder">
@@ -210,6 +220,7 @@
                     </div>
                 </div>
             </div>
+            <!-- All voltage related statistics -->
             <div class="sensor-data" id="voltageData">
                 <p class="data-header">Voltage (V)</p>
                 <div class="data-holder">
@@ -231,6 +242,7 @@
                     </div>
                 </div>
             </div>
+            <!-- All pressure related statistics -->
             <div class="sensor-data" id="pressureData">
                 <p class="data-header">Pressure (kPa)</p>
                 <div class="data-holder">
@@ -249,6 +261,8 @@
         <!-----Alerts Center Content----->
         <div class ="alerts-middle" id="alertsMiddle">
             <h2>No System Alerts Detected</h2>
+
+                <!-- Green Positive Alerts -->
                 <div id="alert-success-save" class="alert success">
                     <span class="closebtn">&times;</span>  
                     <p id="alert-success-message-save"></p>
@@ -259,6 +273,7 @@
                     <p id="alert-success-message-stop"></p>
                 </div>
         
+                <!-- Orange Warning Alerts -->
                 <div id="alert-warning-check" class="alert warning">
                     <span class="closebtn">&times;</span>  
                     <p id="alert-warning-message-check"></p>
@@ -274,6 +289,7 @@
                     <p id="alert-warning-message-battery25"></p>
                 </div>
         
+                <!-- Yellow Error Alerts -->
                 <div id="alert-error-dead" class="alert error">
                     <span class="closebtn">&times;</span>  
                     <p id="alert-error-message-dead"></p>
@@ -286,7 +302,7 @@
         </div>
 
         <!-----Inputs Content----->
-        <div class ="inputs-middle" >
+        <div class ="inputs-middle">
             <div id="inputsMiddle">
                 <form>
                 <fieldset>
@@ -321,6 +337,7 @@
         </div>
 
         <!-- Popup Notifications  -->
+        <!-- Green Popup Notifications -->
         <div id="popup-success-save" class="alert success">
             <span id="succes" class="closebtn">&times;</span>  
             <p id="popup-success-message-save"></p>
@@ -331,6 +348,7 @@
             <p id="popup-success-message-stop"></p>
         </div>
 
+        <!-- Orange Popup Notifications -->
         <div id="popup-warning-check" class="alert warning">
             <span class="closebtn">&times;</span>  
             <p id="popup-warning-message-check"></p>
@@ -346,6 +364,7 @@
             <p id="popup-warning-message-battery25"></p>
         </div>
 
+        <!-- Red Popup Notifications -->
         <div id="popup-error-dead" class="alert error">
             <span class="closebtn">&times;</span>  
             <p id="popup-error-message-dead"></p>

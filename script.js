@@ -1,15 +1,18 @@
+//function will run upon the completion of the websites loading, allowing all elements to be fully initialized before code acts on them 
 window.onload = function() {
+
     //variables declared
-    let podStatus = "off";
-    let wheelRadius = 0.3; //meters
-    let speedCounter = 0; 
-    let travelledPercentage = 0; 
-    let brakingAcceleration = 0; 
+    let podStatus = "off"; //represents the stat of the pod 
+    let wheelRadius = 0.3; //meters (used in rpm calculation)
+    let speedCounter = 0;  
+    let travelledPercentage = 0; //represents the distance the pod has travelled along the bar 
+    let brakingAcceleration = 0; //
     let tripLength = 0 
+    let batteryLevel = 100; //maximum battery percentage 
     //end of variable declaration
 
-    //start of page functionality
-    const homeButton = document.getElementById("homeLogo");
+    //start of page functionality, by hiding elements the single html file can appear to represent multiple pages 
+    const homeButton = document.getElementById("homeLogo"); //home logo (acts as a button to return to the home page)
     homeButton.addEventListener('click', function() {
       document.getElementById("alertsMiddle").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "none"
@@ -20,7 +23,7 @@ window.onload = function() {
       document.getElementById("dashboardMiddle").style.display = "none"
     });
 
-    const returnHome = document.getElementById("returnHome");
+    const returnHome = document.getElementById("returnHome"); //return home shortcut
     returnHome.addEventListener('click', function() {
       document.getElementById("alertsMiddle").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "none"
@@ -31,7 +34,7 @@ window.onload = function() {
       document.getElementById("dashboardMiddle").style.display = "none"
     });
 
-    const tripProgress = document.getElementById("tripProgress");
+    const tripProgress = document.getElementById("tripProgress"); //trip progress shortcut
     tripProgress.addEventListener('click', function() {
       document.getElementById("alertsMiddle").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "none"
@@ -42,14 +45,14 @@ window.onload = function() {
       document.getElementById("dashboardMiddle").style.display = "flex"
     });
 
-    const dashboard = document.getElementById("dashboard");
+    const dashboard = document.getElementById("dashboard"); //dashboard main page button
     dashboard.addEventListener('click', function() {
       document.getElementById("menuSidebar").style.display = "none"
       document.getElementById("menu-middle").style.display = "none"
       document.getElementById("dashboardMiddle").style.display = "flex"
     });
 
-    const alerts = document.getElementById("podSystem");
+    const alerts = document.getElementById("podSystem"); //pod systems page button
     alerts.addEventListener('click', function() {
       document.getElementById("menuSidebar").style.display = "none"
       document.getElementById("menu-middle").style.display = "none"
@@ -57,7 +60,7 @@ window.onload = function() {
       document.getElementById("podsystemSidebar").style.display = "flex"
     });
 
-    const podStats = document.getElementById("podStatus");
+    const podStats = document.getElementById("podStatus"); //pod status shortcut button
     podStats.addEventListener('click', function() {
       document.getElementById("alertsMiddle").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "none"
@@ -68,14 +71,14 @@ window.onload = function() {
       document.getElementById("dashboardMiddle").style.display = "none"
     });
 
-    const inputs = document.getElementById("alerts");
+    const inputs = document.getElementById("alerts"); //alerts page main button 
     inputs.addEventListener('click', function() {
       document.getElementById("menuSidebar").style.display = "none"
       document.getElementById("menu-middle").style.display = "none"
       document.getElementById("alertsMiddle").style.display = "flex"
     });
 
-    const errors = document.getElementById("errors");
+    const errors = document.getElementById("errors"); //notifications shortcut button 
     errors.addEventListener('click', function() {
       document.getElementById("alertsMiddle").style.display = "flex"
       document.getElementById("inputsMiddle").style.display = "none"
@@ -86,14 +89,14 @@ window.onload = function() {
       document.getElementById("dashboardMiddle").style.display = "none"
     });
 
-    const podSystem = document.getElementById("inputs");
+    const podSystem = document.getElementById("inputs"); //inputs page main button 
     podSystem.addEventListener('click', function() {
       document.getElementById("menuSidebar").style.display = "none"
       document.getElementById("menu-middle").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "flex"
     });
 
-    const userInputs = document.getElementById("userInputs");
+    const userInputs = document.getElementById("userInputs"); //shortcuts user inputs button 
     userInputs.addEventListener('click', function() {
       document.getElementById("alertsMiddle").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "flex"
@@ -104,7 +107,7 @@ window.onload = function() {
       document.getElementById("dashboardMiddle").style.display = "none"
     });
 
-    const closeButtons = document.querySelectorAll(".closebtn");
+    const closeButtons = document.querySelectorAll(".closebtn"); //uses a loop to select all alerts and allow them to be closed with the "x" close button
     closeButtons.forEach(function(button) {
       button.addEventListener("click", function() {
         const alertBox = this.parentElement;
@@ -112,7 +115,7 @@ window.onload = function() {
       });
     });
 
-    const saveChanges = document.getElementById("saveChanges");
+    const saveChanges = document.getElementById("saveChanges"); //save changes button on the inputs page, triggers functions to initialize graphs 
     saveChanges.addEventListener('click', function() {
       startupTemp(); 
       startupVoltage(); 
@@ -121,7 +124,7 @@ window.onload = function() {
     });
     //end of page functionality
 
-//Start at local storage conditionals
+//local storage conditionals, currently each individual item is pulled from local storage into the page design, it is done here to ensure it shows upon the page loading 
 if(localStorage.getItem("Location Right")!= undefined) {
   document.getElementById("locationRight").innerHTML = localStorage.getItem("Location Right"); 
 }
@@ -196,8 +199,9 @@ if(localStorage.getItem("Trip Distance")!= undefined) {
 }
 //end of local storage conditionals
 
-//start of pod image distance calculation
-function updatePodDistance () {
+//start of pod image distance calculation, this function calculates the distance remaining and finds that information as a percentage which is 
+//stored to be used later in the CSS to ensure the pod is moving correctly on the bottom of the dashboard
+function updatePodDistance () { 
 let targetDistance = document.getElementById("tripDistance").innerHTML; 
 let travelledDistance = document.getElementById('travelledDistance').innerHTML;
 let podImageDistance = document.getElementById('pod-distance');
@@ -207,9 +211,9 @@ podImageDistance.style.setProperty('--pod-width',travelledPercentage + '%');
 //end of pod image distance calculation 
 
 //start of graph acceleration
-let accelerationCanvas = document.getElementById("accelerationGraph");
+let accelerationCanvas = document.getElementById("accelerationGraph"); //graph is linked to html 
 let dataPointsAcceleration = [];
-let accelerationData = {
+let accelerationData = { //data is described
     labels: [],
     datasets: [{
         label: "Acceleration",
@@ -219,7 +223,7 @@ let accelerationData = {
     }]
 };
 
-let chartOptionsAcceleration = {
+let chartOptionsAcceleration = { //chart options are selected
     maintainAspectRatio: false,
     responsive: false, 
     scales: {
@@ -236,17 +240,17 @@ let chartOptionsAcceleration = {
   }
 };
 
-let accelerationChart = new Chart(accelerationCanvas, {
+let accelerationChart = new Chart(accelerationCanvas, { //graph is defined
     type: 'line',
     data: accelerationData,
     options: chartOptionsAcceleration,
 });
 
-let currentAcceleration = +(localStorage.getItem("Acceleration"));
+let currentAcceleration = +(localStorage.getItem("Acceleration")); 
 if (currentAcceleration === "" || currentAcceleration === undefined) currentAcceleration = 3.7;  
 let currentTime = new Date().toLocaleTimeString();
 
-function startupAcceleration() { 
+function startupAcceleration() { //function is created to enable a default current acceleration 
 currentAcceleration = +(localStorage.getItem("Acceleration"));
 if (currentAcceleration === "" || currentAcceleration === undefined) currentAcceleration = 3.7;  
 let currentTime = new Date().toLocaleTimeString();
@@ -255,23 +259,23 @@ accelerationData.labels.push(currentTime);
 accelerationChart.update();
 }
 
-function addDataAcceleration() {
+function addDataAcceleration() { //function that goes through and draws the graph based on prevous definitions
     let updateFromLocalAcceleration = localStorage.getItem("Acceleration"); 
-    if(updateFromLocalAcceleration != 0) {
+    if(updateFromLocalAcceleration != 0) { //math here is done to replicate a semi-realistc acceleration (not constant)
     currentAcceleration += Math.random() * (2*(+updateFromLocalAcceleration/100)) - (+updateFromLocalAcceleration/100);
     if(currentAcceleration > +updateFromLocalAcceleration/2) currentAcceleration - 2*(+updateFromLocalAcceleration/100); 
     if(currentAcceleration < +updateFromLocalAcceleration/-2) currentAcceleration + 2*(+updateFromLocalAcceleration/100); 
     } else {
-      currentAcceleration = 0; 
+      currentAcceleration = 0;  
     }
     currentTime = new Date().toLocaleTimeString();
 
-    if (dataPointsAcceleration.length >= 10) {
+    if (dataPointsAcceleration.length >= 10) { //causes the graph to shift and only include 10 points
         dataPointsAcceleration.shift();
         accelerationData.labels.shift();
     }
 
-    localStorage.setItem("Acceleration", (currentAcceleration).toFixed(1));
+    localStorage.setItem("Acceleration", (currentAcceleration).toFixed(2));
     document.getElementById("acceleration").innerHTML = localStorage.getItem("Acceleration"); 
     dataPointsAcceleration.push(currentAcceleration);
     accelerationData.labels.push(currentTime);
@@ -280,9 +284,9 @@ function addDataAcceleration() {
 //end of graph acceleration
 
 //start of graph rpm
-let rpmCanvas = document.getElementById("rpmGraph");
+let rpmCanvas = document.getElementById("rpmGraph"); //graph is linked to html 
 let dataPointsRPM = [];
-let rpmData = {
+let rpmData = { //graphs data is described 
     labels: [],
     datasets: [{
         label: "RPM",
@@ -292,7 +296,7 @@ let rpmData = {
     }]
 };
 
-let chartOptionsRPM = {
+let chartOptionsRPM = { //chart selections are made 
     maintainAspectRatio: false,
     responsive: false, 
     scales: {
@@ -309,7 +313,7 @@ let chartOptionsRPM = {
   }
 };
 
-let rpmChart = new Chart(rpmCanvas, {
+let rpmChart = new Chart(rpmCanvas, { //graph type is declared
     type: 'line',
     data: rpmData,
     options: chartOptionsRPM,
@@ -319,7 +323,7 @@ let currentRPM = +(localStorage.getItem("RPM"));
 if (currentRPM === "" || currentRPM === undefined) currentRPM = 0;  
 currentTime = new Date().toLocaleTimeString();
 
-function startupRPM() { 
+function startupRPM() {  //general case 
 currentRPM = +(localStorage.getItem("RPM"));
 if (currentRPM === "" || currentRPM === undefined) currentRPM = 0;  
 let currentTime = new Date().toLocaleTimeString();
@@ -328,7 +332,7 @@ rpmData.labels.push(currentTime);
 rpmChart.update();
 }
 
-function addDataRPM() {
+function addDataRPM() { //populating the graphs based one the defined characteristics 
     let updateFromSpeed = +document.getElementById("speed").innerHTML;   
     currentRPM = ((updateFromSpeed / 3.6) * 60)/(2 * Math.PI * wheelRadius);  
     currentTime = new Date().toLocaleTimeString();
@@ -347,10 +351,10 @@ function addDataRPM() {
 //end of graph rpm
 
 //start of graph creation temperature
-let tempCanvas = document.getElementById("tempGraph");
+let tempCanvas = document.getElementById("tempGraph"); //graph is linked to html canvas tag with id "tempgraph"
 let dataPointsTemp = [];
-let tempData = {
-    labels: [],
+let tempData = { //data is described 
+    labels: [], 
     datasets: [{
         label: "Temperature",
         data: dataPointsTemp,
@@ -359,22 +363,22 @@ let tempData = {
     }]
 };
 
-let chartOptionsTemp = {
+let chartOptionsTemp = { //chart options are selected 
     maintainAspectRatio: false,
 };
 
-let tempChart = new Chart(tempCanvas, {
+let tempChart = new Chart(tempCanvas, { //chart charadcteristics are defined 
     type: 'line',
     data: tempData,
     options: chartOptionsTemp
 });
 
-let currentTemp = +(localStorage.getItem("Motor Temperature"));
+let currentTemp = +(localStorage.getItem("Motor Temperature")); 
 if (currentTemp === "" || currentTemp === undefined || currentTemp === 0.0) currentTemp = 45;  
 currentTime = new Date().toLocaleTimeString();
 
-function startupTemp() { 
-currentTemp = +(localStorage.getItem("Motor Temperature"));
+function startupTemp() { //default case
+currentTemp = +(localStorage.getItem("Motor Temperature")); 
 if (currentTemp === "" || currentTemp === undefined || currentTemp === 0.0) currentTemp = 45;  
 let currentTime = new Date().toLocaleTimeString();
 dataPointsTemp.push(currentTemp);
@@ -382,14 +386,16 @@ tempData.labels.push(currentTime);
 tempChart.update();
 }
 
-function addDataTemp() {
-    let updateFromLocalTemp = localStorage.getItem("Motor Temperature");   
+function addDataTemp() { //function that prints the graph to the screen 
+    let updateFromLocalTemp = localStorage.getItem("Motor Temperature"); 
+    
+    //math calculations generate random values within a set range that cannot be left 
     currentTemp += Math.random() * (2*(+updateFromLocalTemp/100)) - (+updateFromLocalTemp/100);
     if(currentTemp > +updateFromLocalTemp/2) currentTemp - 2*(+updateFromLocalTemp/100); 
     if(currentTemp < +updateFromLocalTemp/-2) currentTemp + 2*(+updateFromLocalTemp/100); 
     currentTime = new Date().toLocaleTimeString();
 
-    if (dataPointsTemp.length >= 10) {
+    if (dataPointsTemp.length >= 10) { //only 10 data points remain on the screen 
         dataPointsTemp.shift();
         tempData.labels.shift();
     }
@@ -403,9 +409,9 @@ function addDataTemp() {
 //end of graph creation temperature
 
 //start of graph creation voltage
-let voltageCanvas = document.getElementById("voltageGraph");
+let voltageCanvas = document.getElementById("voltageGraph"); //graph is linked to html 
 let dataPointsVoltage = [];
-let voltageData = {
+let voltageData = { //data is described 
     labels: [],
     datasets: [{
         label: "Voltage",
@@ -415,11 +421,11 @@ let voltageData = {
     }]
 };
 
-let chartOptionsVoltage = {
+let chartOptionsVoltage = { //settings are selected 
     maintainAspectRatio: false,
 };
 
-let voltageChart = new Chart(voltageCanvas, {
+let voltageChart = new Chart(voltageCanvas, { //graph type is declared 
     type: 'line',
     data: voltageData,
     options: chartOptionsVoltage
@@ -429,7 +435,7 @@ let currentVoltage = +(localStorage.getItem("Main Battery Voltage"));
 if (currentVoltage === "" || currentVoltage === undefined || currentVoltage === 0.0) currentVoltage = 48.1;  
 currentTime = new Date().toLocaleTimeString();
 
-function startupVoltage() { 
+function startupVoltage() {  //default case is provided
 currentVoltage = +(localStorage.getItem("Main Battery Voltage"));
 if (currentVoltage === "" || currentVoltage === undefined || currentVoltage === 0.0) currentVoltage = 48.1;  
 let currentTime = new Date().toLocaleTimeString();
@@ -438,14 +444,14 @@ voltageData.labels.push(currentTime);
 voltageChart.update();
 }
 
-function addDataVoltage() {
+function addDataVoltage() { //function that prints the graph and runs a singular cycle
     let updateFromLocalVoltage = localStorage.getItem("Main Battery Voltage");   
     currentVoltage += Math.random() * (2*(+updateFromLocalVoltage/100)) - (+updateFromLocalVoltage/100);
     if(currentVoltage > +updateFromLocalVoltage/2) currentVoltage - 2*(+updateFromLocalVoltage/100); 
     if(currentVoltage < +updateFromLocalVoltage/-2) currentVoltage + 2*(+updateFromLocalVoltage/100); 
     currentTime = new Date().toLocaleTimeString();
 
-    if (dataPointsVoltage.length >= 10) {
+    if (dataPointsVoltage.length >= 10) { //allows only 10 data points in the view 
         dataPointsVoltage.shift();
         voltageData.labels.shift();
     }
@@ -458,9 +464,8 @@ function addDataVoltage() {
 }
 // end of graph voltage
 
-// start of battery tracker
-let batteryLevel = 100;
-const data = {
+//start of battery tracker on the dashboard
+const data = { //data is defined 
   datasets: [{
     data: [batteryLevel, 100-batteryLevel],
     backgroundColor: ['#32CD32', '#111016'],
@@ -469,14 +474,14 @@ const data = {
   }]
 };
 
-const options = {
+const options = { //options are selected for the battery 
   responsive: false,
   cutout: '80%',
   rotation: 0,
   circumference: 360,
 };
 
-const chart = new Chart('battery-chart', {
+const chart = new Chart('battery-chart', { //chart type is declared 
   type: 'doughnut',
   data: data,
   options: options
@@ -484,83 +489,89 @@ const chart = new Chart('battery-chart', {
 //end of battery tracker 
 
 //start of speedometer
-const needle = document.querySelector('.needle');
-const value = document.querySelector('.value');
-const maxSpeed = 1000;
+const needle = document.querySelector('.needle'); //needle element in html is assigned a variable 
+const value = document.querySelector('.value'); //value element in html is assigned a variable 
+const maxSpeed = 1000; //maximum speed the speedometer will show in km/h before looping around for a second time 
 
-function updateSpeedometer(speed) { 
+function updateSpeedometer(speed) { //calculates the position of the needle based on the input speed value
   const angle = speed / maxSpeed * 270 - 135;
   needle.style.transform = `rotate(${angle}deg)`;
   value.innerHTML = (+document.getElementById("speed").innerHTML).toFixed();
 }
 //end of speedometer
 
-//navigation buttons
-const start = document.getElementById("start");
+//navigation buttons on the dashboard 
+const start = document.getElementById("start"); //start button 
     start.addEventListener('click', function() {
+      //using a constantly listening function it, a check is preformed to ensure it can launch
       if(checkAcceleration() === true && +document.getElementById("accelerationTime").innerHTML != 0) {
         podStatus = "accelerating";
-        document.getElementById("armed-line").style.display = "flex"
-        underway.style.zIndex = 2; 
+        document.getElementById("armed-line").style.display = "flex" //causes the status bar at the top to show the pod has begun its journey 
+        underway.style.zIndex = 2; //all z index changes are to display different buttons that exist under the current navigation buttons depending on the situation 
         start.style.zIndex = 1; 
-        document.getElementById("accelerationTime").style.display = "flex"
+        document.getElementById("accelerationTime").style.display = "flex" //shows the time that the pod will accelerate for 
         let count = Math.ceil(+localStorage.getItem("Acceleration Time"));
-        const countdownInterval = setInterval (() => {
+
+        const countdownInterval = setInterval (() => { //function acts on 1s intervals and calculates the speed using kinematics while also decrementing the time in the status bar 
           speedCounter++; 
           document.getElementById("accelerationTime").innerHTML = "(" + count + "s)"; 
           document.getElementById("speed").innerHTML = (speedCounter * +document.getElementById("acceleration").innerHTML * 3.6).toFixed(2); 
           count--;
-          if(count === 0) {
-            clearInterval(countdownInterval); 
-            document.getElementById("accelerationTime").style.display = "none"
+          if(count === 0) { //if the acceleration has been completed
+            clearInterval(countdownInterval); //stops the countdown
+            document.getElementById("accelerationTime").style.display = "none" //stops the acceleration time from showing 
             podStatus = "coasting"; 
-            if(podStatus === "coasting") {
+            if(podStatus === "coasting") { 
             localStorage.setItem("Acceleration", 0);  
-            } 
+            }
             document.getElementById("acceleration").innerHTML = 0;  
             document.getElementById("accelerating-line").style.display = "flex"
           }
-        }, 1000); 
-      } else {
+        }, 1000); //operates on 1s intervals 
+
+      } else { //if the check for launch failed 
+        //alert is sent out to let the user know that an acceleration in m/s^2 and a duration must be input 
         document.getElementById("popup-error-message-launch").innerHTML = "Error! No acceleration details detected " + new Date().toLocaleTimeString();
             document.getElementById("alert-error-message-launch").innerHTML = "Error! No acceleration details detected " + new Date().toLocaleTimeString();
             document.getElementById("popup-error-launch").style.display = "flex";
             document.getElementById("alert-error-launch").style.display = "flex";
             setTimeout(function() {
               document.getElementById("popup-error-launch").style.display = "none";
-            }, 5000); 
+            }, 5000); //notification will last for 5s and then must be found in the alerts section 
       }
     });
 
+//stop button on the dashboard
 const stop = document.getElementById("stop");
-    stop.addEventListener('click', function() {
+    stop.addEventListener('click', function() { //when the stop button is clicked, the pod is stopped so must indicate that with the status bar at the top of the dashboard 
       document.getElementById("off-line").style.display = "flex"
       document.getElementById("armed-line").style.display = "flex"
       document.getElementById("accelerating-line").style.display = "flex"
       document.getElementById("coasting-line").style.display = "flex"
       document.getElementById("braking-line").style.display = "flex"
-      reset.style.zIndex = 2; 
+      reset.style.zIndex = 2; //hides the stop button since the system must be reset before it can be stopped again 
       stop.style.zIndex = 1; 
       podStatus = "off"; 
       document.getElementById("speed").innerHTML = 0;  
-      updateSpeedometer(0); 
+      updateSpeedometer(0); //makes sure the speedometer has been turned off
       document.getElementById("rpm").innerHTML = 0; 
-      podStatus = "off"; 
       localStorage.setItem("RPM", 0); 
       localStorage.setItem("Acceleration", 0); 
+      document.getElementById("acceleration").innerHTML = 0;
 
+      //alert indicating the pod has come to a stop 
       document.getElementById("popup-success-message-stop").innerHTML = "Success! The pod is stationary. " + new Date().toLocaleTimeString();
       document.getElementById("alert-success-message-stop").innerHTML = "Success! The pod is stationary. " + new Date().toLocaleTimeString();
       document.getElementById("popup-success-stop").style.display = "flex";
       document.getElementById("alert-success-stop").style.display = "flex";
       setTimeout(function() {
         document.getElementById("popup-success-stop").style.display = "none";
-      }, 5000); 
+      }, 5000); //displays for 5 seconds 
     });   
 
-const check = document.getElementById("check");
+const check = document.getElementById("check"); //check button on the navigation 
     check.addEventListener('click', function() {
-      if (readyCheck() === true) {
+      if (readyCheck() === true) { //utilizes a function which checks a series of preferences before proceeding 
       document.getElementById("off-line").style.display = "flex"
       document.getElementById("armed-line").style.display = "none"
       document.getElementById("accelerating-line").style.display = "none"
@@ -569,7 +580,8 @@ const check = document.getElementById("check");
       check.style.zIndex = 1; 
       start.style.zIndex = 2; 
       document.getElementById("travelledDistance").innerHTML = "0"
-      } else {
+      } else { //if the check fails 
+        //system sends out a warning explaining possible reasons for the failure 
         document.getElementById("popup-warning-message-check").innerHTML = "Warning! Arming failed, ensure pod is stationary. " + new Date().toLocaleTimeString();
         document.getElementById("alert-warning-message-check").innerHTML = "Warning! Arming failed, ensure pod is stationary. " + new Date().toLocaleTimeString();
         document.getElementById("popup-warning-check").style.display = "flex";
@@ -580,22 +592,21 @@ const check = document.getElementById("check");
       }
     });    
   
-const reset = document.getElementById("reset");
+const reset = document.getElementById("reset"); //reset button on the navigation
     reset.addEventListener('click', function() {
-      location.reload(); 
+      location.reload();  //resets by reloading the web page
     });
-
 //end of navigation buttons 
 
 //if all systems are stopped, arm the pod
 function readyCheck () {
-  if (
+  if ( //checks if the pod is stationary and the battery is a suitable level 
     +document.getElementById("acceleration").innerHTML === 0 &&
     +document.getElementById("rpm").innerHTML === 0 &&
     batteryLevel >= 25 &&
     podStatus === "off"
     ) {
-    podStatus = "armed"; 
+    podStatus = "armed";  //arms the pod if true 
     return true;
     } else {
       return false; 
@@ -603,27 +614,27 @@ function readyCheck () {
 }
 
 //when the system is turned on, enable the battery and speed guages
-function checkCondition() {
+function checkCondition() { //this function exists so that when the pod is turned off the checkCondition fails and the gauges are able to turn off 
   if (podStatus != "off") {
     let speedInterval, batteryInterval;
 
-    speedInterval = setInterval(function() {
+    speedInterval = setInterval(function() { //this interval updating every second updates the speedometer with a new time 
       if (podStatus != "off") {
         let speed = document.getElementById("speed").innerHTML; 
         updateSpeedometer(speed);
       } else {
         clearInterval(speedInterval);
       }
-    }, 1000);
+    }, 1000); //this may appear deceiving, the 1 second interval is not controlled through this 1000, as the speed is calculated using a counter from 1-10 in code written above
     
-    batteryInterval = setInterval(() => {
+    batteryInterval = setInterval(() => { //interval for the battery status 
       if (podStatus != "off") {
         if (batteryLevel > 0) {
-          batteryLevel -= 1;
-          document.getElementById("batteryLevel").innerHTML = batteryLevel + "%"; 
+          batteryLevel -= 1; //decreases the battery life by 1 percent every 5 seconds 
+          document.getElementById("batteryLevel").innerHTML = batteryLevel + "%";  //updates the visual battery level 
           chart.data.datasets[0].data[0] = batteryLevel;
           chart.data.datasets[0].data[1] = 100 - batteryLevel;
-          if(batteryLevel <= 50 && batteryLevel >= 25) {
+          if(batteryLevel <= 50 && batteryLevel >= 25) { //if the battery level falls below 50% a warning alert is sent out 
             chart.data.datasets[0].backgroundColor = ['rgba(238,188,49,255)', '#111016']; 
             chart.data.datasets[0].hoverBackgroundColor = ['white', '#111016']; 
 
@@ -635,7 +646,7 @@ function checkCondition() {
               document.getElementById("popup-warning-battery50").style.display = "none";
             }, 5000); 
         
-          } else if (batteryLevel <= 25) {
+          } else if (batteryLevel <= 25) { //if the battery level is below 25% another warning is sent out 
             chart.data.datasets[0].backgroundColor = ['red', '#111016']; 
             chart.data.datasets[0].hoverBackgroundColor = ['red', '#111016']; 
 
@@ -649,8 +660,9 @@ function checkCondition() {
 
           }
           chart.update();
-        } else {
+        } else { //this means the battery has died 
 
+          //in this scenerio another error message is sent notifying the user of the dead battery 
           document.getElementById("popup-error-message-dead").innerHTML = "Error! Battery has died " + new Date().toLocaleTimeString();
             document.getElementById("alert-error-message-dead").innerHTML = "Error! Battery has died " + new Date().toLocaleTimeString();
             document.getElementById("popup-error-dead").style.display = "flex";
@@ -659,24 +671,24 @@ function checkCondition() {
               document.getElementById("popup-error-dead").style.display = "none";
             }, 5000); 
 
-          clearInterval(batteryInterval);
+          clearInterval(batteryInterval); //if the battery is dead it clears the intervals of the battery to stop the code from running  
         }
       } else {
-        clearInterval(batteryInterval);
+        clearInterval(batteryInterval); //if the pod status does equal off there is no need for the battery to update 
       }
     }, 5000);
   } else { 
-    setTimeout(checkCondition, 100); 
+    setTimeout(checkCondition, 100); //this allows the code to consistently check if there is a change in the podStatus causing the condition to evaluate to true (100ms checks)
   }
 }
-//end 
+//end of battery and speed intervals
 
 //when the pod is launched, enable voltage, temp, rpm acceleration and distance guages
-function checkArmed() {
+function checkArmed() { //checks if the pod is armed  
   if (podStatus != "armed" && podStatus != "off") {
     let voltageInterval, tempInterval, rpmInterval, accelerationInterval, distanceInterval;
 
-    voltageInterval = setInterval(() => {
+    voltageInterval = setInterval(() => { //allows the voltage graph to begin populating 
       if (podStatus != "armed" && podStatus != "off") {
         addDataVoltage();
       } else {
@@ -684,7 +696,7 @@ function checkArmed() {
       }
     }, 1000);
     
-    tempInterval = setInterval(() => {
+    tempInterval = setInterval(() => { //alllows the temperature graph to begin populating 
       if (podStatus != "armed" && podStatus != "off") {
         addDataTemp();
       } else {
@@ -692,7 +704,7 @@ function checkArmed() {
       }
     }, 5000);
     
-    rpmInterval = setInterval(() => {
+    rpmInterval = setInterval(() => { //alllows the rpm graph to begin populating 
       if (podStatus != "armed" && podStatus != "off") {
         addDataRPM();
       } else {
@@ -700,7 +712,7 @@ function checkArmed() {
       }
     }, 500);
     
-    accelerationInterval = setInterval(() => {
+    accelerationInterval = setInterval(() => { //alllows the acceleration graph to begin populating 
       if (podStatus != "armed" && podStatus != "off") {
         addDataAcceleration();
       } else {
@@ -708,7 +720,7 @@ function checkArmed() {
       }
     }, 500);
     
-    distanceInterval = setInterval(() => {
+    distanceInterval = setInterval(() => { //begins to update the pod on the progress bar ensuring that all speeds and accelerations are showcased visually 
       if (podStatus != "armed" && podStatus != "off" && +document.getElementById("travelledDistance").innerHTML <= +document.getElementById("tripDistance").innerHTML) {
         if(podStatus === "accelerating" || podStatus === "coasting" || podStatus === "braking") {
         tripLength += (+((+document.getElementById("speed").innerHTML)/3.6));
@@ -718,13 +730,13 @@ function checkArmed() {
       } else {
         clearInterval(distanceInterval);
       }
-    }, 1000); 
+    }, 1000); //updates the pod every second 
 
   } else { 
-    setTimeout(checkArmed, 100); 
+    setTimeout(checkArmed, 100); //checks every 100ms until the if statement evaluates as true 
   }
 }
-//end
+//end of graph and distance interval declarations 
 
 //waits for and confirms acceleration has been input by user
 function checkAcceleration() {
@@ -734,7 +746,7 @@ function checkAcceleration() {
     setTimeout(checkAcceleration, 100); 
   }
 }
-//end 
+//end of checkAcceleration function 
 
 //checks to see if the pod successfully finished braking
 function checkVelocity() {
@@ -747,12 +759,12 @@ function checkVelocity() {
   document.getElementById("braking-line").style.display = "flex"
   LocalStorage.setItem("RPM", 0);
   } else { 
-    setTimeout(checkVelocity, 100); 
+    setTimeout(checkVelocity, 100); //if the check fails function will continue to look for the check to pass
   }
 }
-//end of finished braking check 
+//end of speed check 
 
-function checkBraking() {
+function checkBraking() { //this function ensures that the pod is currently breaking by assigning it a negative acceleration 
   if (podStatus === "braking" && brakingAcceleration != 0) {
     let speedInterval
     speedInterval = setInterval(function() {
@@ -764,37 +776,40 @@ function checkBraking() {
       }
     }, 1000);
   } else { 
-    setTimeout(checkBraking, 100); 
+    setTimeout(checkBraking, 100);  //the negative acceleration is only assigned when breaking meaning the function must wait for this to occur 
   }
 }
 
-//waits for and confirms braking criteria has been met
-function checkIfBrake() {
-  if (podStatus === "coasting" && travelledPercentage >= 80) {
+//waits for and confirms braking criteria has been met, then provides the deceleration necessary to meet the target distance at a halt 
+function checkIfBrake() { 
+  if (podStatus === "coasting" && travelledPercentage >= 80) { //if the pod has travelled 80% of its trip and is moving at a constant velocity 
     document.getElementById("coasting-line").style.display = "flex"
     podStatus = "braking";
     let distanceLeft = (+document.getElementById("tripDistance").innerHTML) - (+document.getElementById("travelledDistance").innerHTML);
     let currentSpeed = (+document.getElementById("speed").innerHTML)/3.6; 
     let finalSpeed = 0; 
-    brakingAcceleration = ((currentSpeed ** 2)/(-2 * (distanceLeft))); //deceleration in m/s^2
+    brakingAcceleration = ((currentSpeed ** 2)/(-2 * (distanceLeft))); //deceleration in m/s^2 calculated using kinematics 
     localStorage.setItem("Acceleration", brakingAcceleration); 
+    document.getElementById("acceleration").innerHTML = brakingAcceleration; //stores the deceleration for use in the checkBraking() function 
   } else { 
-    setTimeout(checkIfBrake, 100); 
+    setTimeout(checkIfBrake, 100); //must continiously preform checks until the if statement is true 
   }
 }
-//end 
+//end of checkIfBrake() function 
 
-//function calls
-checkCondition(); 
+//function calls for all of the checks 
+checkCondition();
 checkArmed(); 
 checkIfBrake(); 
 checkVelocity(); 
 checkBraking(); 
 //end of function calls
 
-} //Bottom of window onload function 
+} //end of window onload function 
 
-function locallyStore()  {  //Beginning of local storage function
+//Beginning of local storage function, each item is pulled from the input location within html and uses javascript to upload it to chromes web local storage 
+//this function is called when a click is detected on the save changes button on the inputs page 
+function locallyStore()  { 
   var retrieveLocationRight = document.getElementById("location-right").value; 
   if(retrieveLocationRight != undefined && retrieveLocationRight != '')  {
   var locationRight = localStorage.setItem("Location Right", retrieveLocationRight);
@@ -919,6 +934,7 @@ function locallyStore()  {  //Beginning of local storage function
   document.getElementById("menu-middle").style.display = "flex"
   document.getElementById("inputsMiddle").style.display = "none"; 
 
+    //if the changes are saved a notification will inform the user 
     document.getElementById("popup-success-message-save").innerHTML = "Success! Your inputs have been saved. " + new Date().toLocaleTimeString();
     document.getElementById("alert-success-message-save").innerHTML = "Success! Your inputs have been saved. " + new Date().toLocaleTimeString();
     document.getElementById("popup-success-save").style.display = "flex";
