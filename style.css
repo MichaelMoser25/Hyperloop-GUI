@@ -301,6 +301,12 @@ nav{
     color: grey;
 }
 
+#accelerationTime {
+    position: absolute; 
+    left: 132px; 
+    display: none; 
+}
+
 #accelerationGraph {
     position: absolute; 
     top: 515px; 
@@ -334,11 +340,16 @@ nav{
     font-weight: bold; 
 }
 
-#start,#check {
+#start,#check, #underway {
 top: 200px; 
 left: 50px; 
 background-color: #111016 ;
 z-index: 1;
+}
+
+#underway {
+    background-color: black;
+    z-index: 0; 
 }
 
 #stop {

@@ -45,13 +45,12 @@
         <!-----Left Sidebar----->
         <div class="left-siderbar">
             <div class="shortcuts">
-                <h4>Shortcuts</h4>
-                <p><i class="fa-solid fa-compass"></i> Trip</p> <!---Navigation-->
-                <p><i class="fa-solid fa-battery-half"></i> Battery Status</p> <!---Battery status-->
-                <p><i class="fa-solid fa-clipboard"></i> Notes</p> <!---Notes-->
-                <p><i class="fa-solid fa-triangle-exclamation"></i> Errors </p>
-                <p><i class="fa-solid fa-clock-rotate-left"></i> History </p>
-                <p><i class="fa-solid fa-sliders"></i> Settings</p>
+                <h4>Quick Access</h4>
+                <p id="returnHome"><i class="fa-solid fa-clock-rotate-left"></i> Return Home </p>
+                <p id="tripProgress"><i class="fa-solid fa-compass"></i> Trip Progress </p> 
+                <p id="podStatus"><i class="fa-solid fa-battery-half"></i> Pod Status </p> 
+                <p id="errors"><i class="fa-solid fa-triangle-exclamation"></i> Errors </p>
+                <p id="userInputs"><i class="fa-solid fa-sliders"></i> User Inputs </p>
             </div>
         </div>
         
@@ -86,6 +85,7 @@
             <div class="navigationButtons" id="start"><p>Launch</p></div>
             <div class="navigationButtons" id="check"><p>Check</p></div>
             <div class="navigationButtons" id="reset"><p>Reset</p></a></div>
+            <div class="navigationButtons" id="underway"></div>
             <div class="pod-status" id="pod-status">
                 <div class="pod-mode" id="off">
                     <h3>1</h3>
@@ -100,6 +100,7 @@
                 <div class="pod-mode" id="accelerating">
                     <h3>3</h3>
                     <p>Accelerating</p>
+                    <p id="accelerationTime"></p>
                     <div class="initiation-line" id="accelerating-line"></div>
                 </div>
                 <div class="pod-mode" id="coasting">
@@ -145,19 +146,19 @@
                 <div class="data-holder">
                     <div class="data-text">
                         <p class="data-name">RPM (r/min):</p>
-                        <p class="data-value" id="rpm">120</p>
+                        <p class="data-value" id="rpm">0</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">Acceleration (m/s<sup>2</sup>):</p>
-                        <p class="data-value" id="acceleration">3.7</p>
+                        <p class="data-value" id="acceleration">0</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">Trip Distance (m):</p>
-                        <p class="data-value" id="travelledDistance">1560</p>
+                        <p class="data-value" id="travelledDistance">0</p>
                     </div>
                     <div class="data-text">
                         <p class="data-name">Speed (km/h):</p>
-                        <p class="data-value" id="speed">40</p>
+                        <p class="data-value" id="speed">0</p>
                     </div>
                 </div>
             </div>
@@ -260,19 +261,15 @@
                     <p><strong>Error!</strong> Invalid input. Please try again.</p>
                 </div>
         </div>
-
-        <!-----Alerts Right Sidebar----->
-        <div class="alerts-right-sidebar" id="alertsSidebar">
-        </div>
-
+        
         <!-----Inputs Content----->
         <div class ="inputs-middle" >
             <div id="inputsMiddle">
                 <form>
                 <fieldset>
                     <label for="trip-distance">Trip Distance<input id="trip-distance" name="trip-distance" type="text" placeholder="input meters" maxlength="6"/></label>
-                    <label for="acceleration-value">Acceleration<input id="acceleration-value" name="acceleration-value" type="text" placeholder="input meters per second squared" maxlength="4"/></label>
-                    <label for="speed-value">Speed<input id="speed-value" name="speed-value" type="text" placeholder="input kilometers per hour" maxlength="5"/></label>
+                    <label for="acceleration-value">Acceleration<input id="acceleration-value" name="acceleration-value" type="text" placeholder="input meters per second squared" maxlength="5"/></label>
+                    <label for="acceleration-time">Acceleration Time<input id="acceleration-time" name="acceleration-time" type="text" placeholder="input seconds" maxlength="3"/></label>
                     <label for="rpm-value">Revolutions Per Minute<input id="rpm-value" name="rpm-value" type="text" placeholder="input revolutions per minute" maxlength="5"/></label>
                     <label for="vessel-pressure">Vessel Pressure<input id="vessel-pressure" name="vessel-pressure" type="text" placeholder="input kilopascals" maxlength="4"/></label>
                     <label for="air-tank-pressure">Air Tank Pressure<input id="air-tank-pressure" name="air-tank-pressure" type="text" placeholder="input kilopascals" maxlength="4"/></label>

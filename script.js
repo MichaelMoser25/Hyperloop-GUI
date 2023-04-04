@@ -2,19 +2,45 @@ window.onload = function() {
 
     //variables declared
     let podStatus = "off";
+    let wheelRadius = 0.3; //meters
+    let speedCounter = 0; 
+    let travelledPercentage = 0; 
+    let brakingAcceleration = 0; 
+    let tripLength = 0 
     //end of variable declaration
 
     //start of page functionality
     const homeButton = document.getElementById("homeLogo");
     homeButton.addEventListener('click', function() {
       document.getElementById("alertsMiddle").style.display = "none"
-      document.getElementById("alertsSidebar").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "none"
       document.getElementById("podsystemMiddle").style.display = "none"
       document.getElementById("podsystemSidebar").style.display = "none"
       document.getElementById("menuSidebar").style.display = "flex"
       document.getElementById("menu-middle").style.display = "flex"
       document.getElementById("dashboardMiddle").style.display = "none"
+    });
+
+    const returnHome = document.getElementById("returnHome");
+    returnHome.addEventListener('click', function() {
+      document.getElementById("alertsMiddle").style.display = "none"
+      document.getElementById("inputsMiddle").style.display = "none"
+      document.getElementById("podsystemMiddle").style.display = "none"
+      document.getElementById("podsystemSidebar").style.display = "none"
+      document.getElementById("menuSidebar").style.display = "flex"
+      document.getElementById("menu-middle").style.display = "flex"
+      document.getElementById("dashboardMiddle").style.display = "none"
+    });
+
+    const tripProgress = document.getElementById("tripProgress");
+    tripProgress.addEventListener('click', function() {
+      document.getElementById("alertsMiddle").style.display = "none"
+      document.getElementById("inputsMiddle").style.display = "none"
+      document.getElementById("podsystemMiddle").style.display = "none"
+      document.getElementById("podsystemSidebar").style.display = "none"
+      document.getElementById("menuSidebar").style.display = "none"
+      document.getElementById("menu-middle").style.display = "none"
+      document.getElementById("dashboardMiddle").style.display = "flex"
     });
 
     const dashboard = document.getElementById("dashboard");
@@ -32,16 +58,48 @@ window.onload = function() {
       document.getElementById("podsystemSidebar").style.display = "flex"
     });
 
+    const podStats = document.getElementById("podStatus");
+    podStats.addEventListener('click', function() {
+      document.getElementById("alertsMiddle").style.display = "none"
+      document.getElementById("inputsMiddle").style.display = "none"
+      document.getElementById("podsystemMiddle").style.display = "flex"
+      document.getElementById("podsystemSidebar").style.display = "flex"
+      document.getElementById("menuSidebar").style.display = "none"
+      document.getElementById("menu-middle").style.display = "none"
+      document.getElementById("dashboardMiddle").style.display = "none"
+    });
+
     const inputs = document.getElementById("alerts");
     inputs.addEventListener('click', function() {
       document.getElementById("menuSidebar").style.display = "none"
       document.getElementById("menu-middle").style.display = "none"
       document.getElementById("alertsMiddle").style.display = "flex"
-      document.getElementById("alertsSidebar").style.display = "flex"
+    });
+
+    const errors = document.getElementById("errors");
+    errors.addEventListener('click', function() {
+      document.getElementById("alertsMiddle").style.display = "flex"
+      document.getElementById("inputsMiddle").style.display = "none"
+      document.getElementById("podsystemMiddle").style.display = "none"
+      document.getElementById("podsystemSidebar").style.display = "none"
+      document.getElementById("menuSidebar").style.display = "none"
+      document.getElementById("menu-middle").style.display = "none"
+      document.getElementById("dashboardMiddle").style.display = "none"
     });
 
     const podSystem = document.getElementById("inputs");
     podSystem.addEventListener('click', function() {
+      document.getElementById("alertsMiddle").style.display = "none"
+      document.getElementById("inputsMiddle").style.display = "flex"
+      document.getElementById("podsystemMiddle").style.display = "none"
+      document.getElementById("podsystemSidebar").style.display = "none"
+      document.getElementById("menuSidebar").style.display = "none"
+      document.getElementById("menu-middle").style.display = "none"
+      document.getElementById("dashboardMiddle").style.display = "none"
+    });
+
+    const userInputs = document.getElementById("userInputs");
+    userInputs.addEventListener('click', function() {
       document.getElementById("menuSidebar").style.display = "none"
       document.getElementById("menu-middle").style.display = "none"
       document.getElementById("inputsMiddle").style.display = "flex"
@@ -120,8 +178,8 @@ if(localStorage.getItem("Motor Temperature")!= undefined) {
 if(localStorage.getItem("RPM")!= undefined) {
   document.getElementById("rpm").innerHTML = localStorage.getItem("RPM"); 
 }
-if(localStorage.getItem("Speed")!= undefined) {
-  document.getElementById("speed").innerHTML = localStorage.getItem("Speed"); 
+if(localStorage.getItem("Acceleration Time")!= undefined && +localStorage.getItem("Acceleration Time") != 0) {
+  document.getElementById("accelerationTime").innerHTML = "(" + Math.ceil(localStorage.getItem("Acceleration Time")) + "s)"; 
 }
 if(localStorage.getItem("Acceleration")!= undefined) {
   document.getElementById("acceleration").innerHTML = localStorage.getItem("Acceleration"); 
@@ -131,51 +189,13 @@ if(localStorage.getItem("Trip Distance")!= undefined) {
 }
 //end of local storage conditionals
 
-//navigation buttons
-const start = document.getElementById("start");
-    start.addEventListener('click', function() {
-    });
-
-const stop = document.getElementById("stop");
-    stop.addEventListener('click', function() {
-      document.getElementById("off-line").style.display = "flex"
-      document.getElementById("armed-line").style.display = "flex"
-      document.getElementById("accelerating-line").style.display = "flex"
-      document.getElementById("coasting-line").style.display = "flex"
-      document.getElementById("braking-line").style.display = "flex"
-      reset.style.zIndex = 2; 
-      stop.style.zIndex = 1; 
-      podStatus = "off"; 
-    });   
-
-const check = document.getElementById("check");
-    check.addEventListener('click', function() {
-      if (readyCheck() === true) {
-      document.getElementById("off-line").style.display = "flex"
-      document.getElementById("armed-line").style.display = "none"
-      document.getElementById("accelerating-line").style.display = "none"
-      document.getElementById("coasting-line").style.display = "none"
-      document.getElementById("braking-line").style.display = "none"
-      check.style.zIndex = 1; 
-      start.style.zIndex = 2; 
-        console.log("armed"); 
-      } else {
-        console.log("arming failed"); 
-      }
-    });    
-  
-const reset = document.getElementById("reset");
-    reset.addEventListener('click', function() {
-      location.reload(); 
-    });
-//end of navigation buttons 
-
 //start of pod image distance calculation
 function updatePodDistance () {
-const targetDistance = document.getElementById("tripDistance").innerHTML; 
-const travelledDistance = document.getElementById('travelledDistance').innerHTML;
-const podImageDistance = document.getElementById('pod-distance');
-podImageDistance.style.setProperty('--pod-width',((+travelledDistance)/(+targetDistance))*100 + '%');
+let targetDistance = document.getElementById("tripDistance").innerHTML; 
+let travelledDistance = document.getElementById('travelledDistance').innerHTML;
+let podImageDistance = document.getElementById('pod-distance');
+travelledPercentage = ((+travelledDistance)/(+targetDistance))*100
+podImageDistance.style.setProperty('--pod-width',travelledPercentage + '%');
 } 
 //end of pod image distance calculation 
 
@@ -229,10 +249,14 @@ accelerationChart.update();
 }
 
 function addDataAcceleration() {
-    let updateFromLocalAcceleration = localStorage.getItem("Acceleration");   
+    let updateFromLocalAcceleration = localStorage.getItem("Acceleration"); 
+    if(updateFromLocalAcceleration != 0) {
     currentAcceleration += Math.random() * (2*(+updateFromLocalAcceleration/100)) - (+updateFromLocalAcceleration/100);
     if(currentAcceleration > +updateFromLocalAcceleration/2) currentAcceleration - 2*(+updateFromLocalAcceleration/100); 
     if(currentAcceleration < +updateFromLocalAcceleration/-2) currentAcceleration + 2*(+updateFromLocalAcceleration/100); 
+    } else {
+      currentAcceleration = 0; 
+    }
     currentTime = new Date().toLocaleTimeString();
 
     if (dataPointsAcceleration.length >= 10) {
@@ -285,12 +309,12 @@ let rpmChart = new Chart(rpmCanvas, {
 });
 
 let currentRPM = +(localStorage.getItem("RPM"));
-if (currentRPM === "" || currentRPM === undefined) currentRPM = 120;  
+if (currentRPM === "" || currentRPM === undefined) currentRPM = 0;  
 currentTime = new Date().toLocaleTimeString();
 
 function startupRPM() { 
 currentRPM = +(localStorage.getItem("RPM"));
-if (currentRPM === "" || currentRPM === undefined) currentRPM = 120;  
+if (currentRPM === "" || currentRPM === undefined) currentRPM = 0;  
 let currentTime = new Date().toLocaleTimeString();
 dataPointsRPM.push(currentRPM);
 rpmData.labels.push(currentTime);
@@ -298,10 +322,8 @@ rpmChart.update();
 }
 
 function addDataRPM() {
-    let updateFromLocalRPM = localStorage.getItem("RPM");   
-    currentRPM += Math.random() * (2*(+updateFromLocalRPM/100)) - (+updateFromLocalRPM/100);
-    if(currentRPM > +updateFromLocalRPM/2) currentRPM - 2*(+updateFromLocalRPM/100); 
-    if(currentRPM < +updateFromLocalRPM/-2) currentRPM + 2*(+updateFromLocalRPM/100); 
+    let updateFromSpeed = +document.getElementById("speed").innerHTML;   
+    currentRPM = ((updateFromSpeed / 3.6) * 60)/(2 * Math.PI * wheelRadius);  
     currentTime = new Date().toLocaleTimeString();
 
     if (dataPointsRPM.length >= 10) {
@@ -430,7 +452,6 @@ function addDataVoltage() {
 // end of graph voltage
 
 // start of battery tracker
-
 let batteryLevel = 100;
 const data = {
   datasets: [{
@@ -453,27 +474,93 @@ const chart = new Chart('battery-chart', {
   data: data,
   options: options
 });
-
 //end of battery tracker 
 
 //start of speedometer
-
 const needle = document.querySelector('.needle');
 const value = document.querySelector('.value');
-const maxSpeed = 300;
+const maxSpeed = 500;
 
 function updateSpeedometer(speed) { 
   const angle = speed / maxSpeed * 270 - 135;
   needle.style.transform = `rotate(${angle}deg)`;
-  value.innerHTML = speed.toFixed();
+  value.innerHTML = (+document.getElementById("speed").innerHTML).toFixed();
 }
-
 //end of speedometer
 
-//moving system checks start 
+//navigation buttons
+const start = document.getElementById("start");
+    start.addEventListener('click', function() {
+      if(checkAcceleration() === true && +document.getElementById("accelerationTime").innerHTML != 0) {
+        podStatus = "accelerating";
+        console.log("accelerating"); 
+        document.getElementById("armed-line").style.display = "flex"
+        underway.style.zIndex = 2; 
+        start.style.zIndex = 1; 
+        document.getElementById("accelerationTime").style.display = "flex"
+        let count = Math.ceil(+localStorage.getItem("Acceleration Time"));
+        const countdownInterval = setInterval (() => {
+          speedCounter++; 
+          document.getElementById("accelerationTime").innerHTML = "(" + count + "s)"; 
+          document.getElementById("speed").innerHTML = (speedCounter * +document.getElementById("acceleration").innerHTML * 3.6).toFixed(2); 
+          count--;
+          if(count === 0) {
+            clearInterval(countdownInterval); 
+            document.getElementById("accelerationTime").style.display = "none"
+            podStatus = "coasting"; 
+            console.log("coasting"); 
+            localStorage.setItem("Acceleration", 0);
+            document.getElementById("acceleration").innerHTML = 0;  
+            document.getElementById("accelerating-line").style.display = "flex"
+          }
+        }, 1000); 
+      } 
+    });
+
+const stop = document.getElementById("stop");
+    stop.addEventListener('click', function() {
+      document.getElementById("off-line").style.display = "flex"
+      document.getElementById("armed-line").style.display = "flex"
+      document.getElementById("accelerating-line").style.display = "flex"
+      document.getElementById("coasting-line").style.display = "flex"
+      document.getElementById("braking-line").style.display = "flex"
+      reset.style.zIndex = 2; 
+      stop.style.zIndex = 1; 
+      podStatus = "off"; 
+      document.getElementById("speed").innerHTML = 0;  
+      updateSpeedometer(0); 
+      document.getElementById("rpm").innerHTML = 0; 
+      podStatus = "off"; 
+      localStorage.setItem("RPM", 0); 
+    });   
+
+const check = document.getElementById("check");
+    check.addEventListener('click', function() {
+      if (readyCheck() === true) {
+      document.getElementById("off-line").style.display = "flex"
+      document.getElementById("armed-line").style.display = "none"
+      document.getElementById("accelerating-line").style.display = "none"
+      document.getElementById("coasting-line").style.display = "none"
+      document.getElementById("braking-line").style.display = "none"
+      check.style.zIndex = 1; 
+      start.style.zIndex = 2; 
+      document.getElementById("travelledDistance").innerHTML = "0"
+        console.log("armed"); 
+      } else {
+        console.log("arming failed"); 
+      }
+    });    
+  
+const reset = document.getElementById("reset");
+    reset.addEventListener('click', function() {
+      location.reload(); 
+    });
+
+//end of navigation buttons 
+
+//if all systems are stopped, arm the pod
 function readyCheck () {
   if (
-    +document.getElementById("speed").innerHTML === 0 &&
     +document.getElementById("acceleration").innerHTML === 0 &&
     +document.getElementById("rpm").innerHTML === 0 &&
     batteryLevel >= 25 &&
@@ -486,14 +573,14 @@ function readyCheck () {
     }
 }
 
-//if the system if not stopped, run the system
+//when the system is turned on, enable the battery and speed guages
 function checkCondition() {
   if (podStatus != "off") {
-    let speedInterval, batteryInterval, voltageInterval, tempInterval, rpmInterval, accelerationInterval, distanceInterval;
+    let speedInterval, batteryInterval;
 
     speedInterval = setInterval(function() {
       if (podStatus != "off") {
-        let speed = Math.floor(Math.random() * (300 - 0 + 1)) + 0;
+        let speed = document.getElementById("speed").innerHTML; 
         updateSpeedometer(speed);
       } else {
         clearInterval(speedInterval);
@@ -523,9 +610,19 @@ function checkCondition() {
         clearInterval(batteryInterval);
       }
     }, 5000);
-    
+  } else { 
+    setTimeout(checkCondition, 100); 
+  }
+}
+//end 
+
+//when the pod is launched, enable voltage, temp, rpm acceleration and distance guages
+function checkArmed() {
+  if (podStatus != "armed" && podStatus != "off") {
+    let voltageInterval, tempInterval, rpmInterval, accelerationInterval, distanceInterval;
+
     voltageInterval = setInterval(() => {
-      if (podStatus != "off") {
+      if (podStatus != "armed" && podStatus != "off") {
         addDataVoltage();
       } else {
         clearInterval(voltageInterval);
@@ -533,7 +630,7 @@ function checkCondition() {
     }, 1000);
     
     tempInterval = setInterval(() => {
-      if (podStatus != "off") {
+      if (podStatus != "armed" && podStatus != "off") {
         addDataTemp();
       } else {
         clearInterval(tempInterval);
@@ -541,7 +638,7 @@ function checkCondition() {
     }, 5000);
     
     rpmInterval = setInterval(() => {
-      if (podStatus != "off") {
+      if (podStatus != "armed" && podStatus != "off") {
         addDataRPM();
       } else {
         clearInterval(rpmInterval);
@@ -549,7 +646,7 @@ function checkCondition() {
     }, 500);
     
     accelerationInterval = setInterval(() => {
-      if (podStatus != "off") {
+      if (podStatus != "armed" && podStatus != "off") {
         addDataAcceleration();
       } else {
         clearInterval(accelerationInterval);
@@ -557,7 +654,11 @@ function checkCondition() {
     }, 500);
     
     distanceInterval = setInterval(() => {
-      if (podStatus != "off") {
+      if (podStatus != "armed" && podStatus != "off" && +document.getElementById("travelledDistance").innerHTML <= +document.getElementById("tripDistance").innerHTML) {
+        if(podStatus === "accelerating" || podStatus === "coasting" || podStatus === "braking") {
+        tripLength += (+((+document.getElementById("speed").innerHTML)/3.6));
+        document.getElementById("travelledDistance").innerHTML = tripLength.toFixed(2); 
+        }
         updatePodDistance();
       } else {
         clearInterval(distanceInterval);
@@ -565,12 +666,75 @@ function checkCondition() {
     }, 1000); 
 
   } else { 
-    setTimeout(checkCondition, 100); 
+    setTimeout(checkArmed, 100); 
+  }
+}
+//end
+
+//waits for and confirms acceleration has been input by user
+function checkAcceleration() {
+  if (+document.getElementById("acceleration").innerHTML != "0" && podStatus === "armed") {
+  return true;
+  } else { 
+    setTimeout(checkAcceleration, 100); 
+  }
+}
+//end 
+
+//checks to see if the pod successfully finished braking
+function checkVelocity() {
+  if (+document.getElementById("speed").innerHTML <= 1 && podStatus === "braking") {
+  document.getElementById("speed").innerHTML = 0; 
+  document.getElementById("travelledDistance").innerHTML = document.getElementById("tripDistance").innerHTML; 
+  updateSpeedometer(0); 
+  document.getElementById("rpm").innerHTML = 0; 
+  podStatus = "off"; 
+  document.getElementById("braking-line").style.display = "flex"
+  ocalStorage.setItem("RPM", 0);
+  } else { 
+    setTimeout(checkVelocity, 100); 
+  }
+}
+//end of finished braking check 
+
+function checkBraking() {
+  if (podStatus === "braking" && brakingAcceleration != 0) {
+    let speedInterval
+    speedInterval = setInterval(function() {
+      if (podStatus != "off") {
+        let speed = +document.getElementById("speed").innerHTML; 
+        document.getElementById("speed").innerHTML = (((speed/3.6)+ brakingAcceleration)*3.6).toFixed(2); 
+      } else {
+        clearInterval(speedInterval);
+      }
+    }, 1000);
+  } else { 
+    console.log(podStatus, brakingAcceleration); 
+    setTimeout(checkBraking, 100); 
   }
 }
 
+//waits for and confirms braking criteria has been met
+function checkIfBrake() {
+  if (podStatus === "coasting" && travelledPercentage >= 80) {
+    document.getElementById("coasting-line").style.display = "flex"
+    podStatus = "braking";
+    let distanceLeft = (+document.getElementById("tripDistance").innerHTML) - (+document.getElementById("travelledDistance").innerHTML);
+    let currentSpeed = (+document.getElementById("speed").innerHTML)/3.6; 
+    let finalSpeed = 0; 
+    brakingAcceleration = ((currentSpeed ** 2)/(-2 * (distanceLeft))); //deceleration in m/s^2
+  } else { 
+    setTimeout(checkIfBrake, 100); 
+  }
+}
+//end 
+
 //function calls
 checkCondition(); 
+checkArmed(); 
+checkIfBrake(); 
+checkVelocity(); 
+checkBraking(); 
 //end of function calls
 
 } //Bottom of window onload function 
@@ -676,10 +840,10 @@ function locallyStore()  {  //Beginning of local storage function
   var vesselPressure = localStorage.setItem("Vessel Pressure", retrieveVesselPressure);
   document.getElementById("vesselPressure").innerHTML = localStorage.getItem("Vessel Pressure"); }
 
-  var retrieveSpeed = document.getElementById("speed-value").value; 
-  if(retrieveSpeed != undefined && retrieveSpeed != '') {  
-  var vesselSpeed = localStorage.setItem("Speed", retrieveSpeed);
-  document.getElementById("speed").innerHTML = localStorage.getItem("Speed"); }
+  var retrieveAccelerationTime = document.getElementById("acceleration-time").value; 
+  if(retrieveAccelerationTime != undefined && retrieveAccelerationTime != '' && retrieveAccelerationTime != 0) {  
+  var accelerationTime = localStorage.setItem("Acceleration Time", retrieveAccelerationTime);
+  document.getElementById("accelerationTime").innerHTML = "(" + Math.ceil(localStorage.getItem("Acceleration Time")) + "s)";}
 
   var retrieveRPM = document.getElementById("rpm-value").value; 
   if(retrieveRPM != undefined && retrieveRPM != '') {  
