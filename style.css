@@ -7,6 +7,7 @@
     padding: 0;
     box-sizing: content-box;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    max-height: 800px; 
 }
 
 body{
@@ -139,12 +140,6 @@ nav{
     margin-top: 20px;
 }
 
-/* right sider bar menu*/
-
-
-
-
-
 /* main menu*/
 .menu-middle {
     margin-top: 10px;
@@ -225,7 +220,6 @@ nav{
     height: 600px; 
     margin-left: -8px;  
 }
-
 
 /* main dashboard*/
 
@@ -423,7 +417,6 @@ z-index: 2;
     font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin-bottom: 20px; 
-
 }
 
 .trip-progress {
@@ -623,11 +616,38 @@ top: 350px;
 }
 
 /* main alerts*/
-#alertsMiddle {
+.alerts-middle {
+    position: absolute; 
+    top: 250px; 
+    left: 325px; 
+    width: 1525px; 
+    overflow: hidden;
+    overflow-y: auto;
     display: none; 
+    flex-direction: column;
+    border-radius: 5px; 
+    min-height: 750px; 
+}
+
+.alerts-middle h2 {
+    color: white; 
+    position: absolute; 
+    width: 400px;
+    left: 33%; 
+}
+
+::-webkit-scrollbar {
+    width: 10px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 12px;
 }
 
 .alert {
+    position: absolute; 
+    bottom: 20px; 
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -637,10 +657,14 @@ top: 350px;
     font-weight: bold;
     width: auto;
     height: 50px; 
+    display: none; 
 }
 
-.alerts-middle p {
-    margin-left: 10px; 
+.alerts-middle .alert {
+    position: relative;
+    height: 50px; 
+    top: 10px; 
+    display: none; 
 }
 
 .success {
@@ -664,17 +688,13 @@ top: 350px;
     font-weight: bold;
     font-size: 22px;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 .closebtn:hover {
     color: black;
 }
 
-/* right sidebar alerts */
-#alertsSidebar {
-    display: none; 
-    background-color: #111016;
-}
 
 /* main inputs*/
 #inputsMiddle {

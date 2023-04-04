@@ -245,23 +245,44 @@
         </div>
 
         <!-----Alerts Center Content----->
-        <div class ="alerts-middle"  id="alertsMiddle">
-                <div class="alert success">
+        <div class ="alerts-middle" id="alertsMiddle">
+            <h2>No System Alerts Detected</h2>
+                <div id="alert-success-save" class="alert success">
                     <span class="closebtn">&times;</span>  
-                    <p><strong>Success!</strong> Your message has been sent.</p>
+                    <p id="alert-success-message-save"></p>
+                </div>
+
+                <div id="alert-success-stop" class="alert success">
+                    <span class="closebtn">&times;</span>  
+                    <p id="alert-success-message-stop"></p>
                 </div>
         
-                <div class="alert warning">
+                <div id="alert-warning-check" class="alert warning">
                     <span class="closebtn">&times;</span>  
-                    <p><strong>Warning!</strong> This action cannot be undone.</p>
+                    <p id="alert-warning-message-check"></p>
+                </div>
+
+                <div id="alert-warning-battery50" class="alert warning">
+                    <span class="closebtn">&times;</span>  
+                    <p id="alert-warning-message-battery50"></p>
+                </div>
+
+                <div id="alert-warning-battery25" class="alert warning">
+                    <span class="closebtn">&times;</span>  
+                    <p id="alert-warning-message-battery25"></p>
                 </div>
         
-                <div class="alert error">
+                <div id="alert-error-dead" class="alert error">
                     <span class="closebtn">&times;</span>  
-                    <p><strong>Error!</strong> Invalid input. Please try again.</p>
+                    <p id="alert-error-message-dead"></p>
+                </div>
+
+                <div id="alert-error-launch" class="alert error">
+                    <span class="closebtn">&times;</span>  
+                    <p id="alert-error-message-launch"></p>
                 </div>
         </div>
-        
+
         <!-----Inputs Content----->
         <div class ="inputs-middle" >
             <div id="inputsMiddle">
@@ -295,6 +316,42 @@
                   <input id="saveChanges" type="button" value="Save Changes" onclick="locallyStore()"/>
                 </form>
             </div>
+        </div>
+
+        <!-- Popup Notifications  -->
+        <div id="popup-success-save" class="alert success">
+            <span id="succes" class="closebtn">&times;</span>  
+            <p id="popup-success-message-save"></p>
+        </div>
+
+        <div id="popup-success-stop" class="alert success">
+            <span id="succes" class="closebtn">&times;</span>  
+            <p id="popup-success-message-stop"></p>
+        </div>
+
+        <div id="popup-warning-check" class="alert warning">
+            <span class="closebtn">&times;</span>  
+            <p id="popup-warning-message-check"></p>
+        </div>
+
+        <div id="popup-warning-battery50" class="alert warning">
+            <span class="closebtn">&times;</span>  
+            <p id="popup-warning-message-battery50"></p>
+        </div>
+
+        <div id="popup-warning-battery25" class="alert warning">
+            <span class="closebtn">&times;</span>  
+            <p id="popup-warning-message-battery25"></p>
+        </div>
+
+        <div id="popup-error-dead" class="alert error">
+            <span class="closebtn">&times;</span>  
+            <p id="popup-error-message-dead"></p>
+        </div>
+
+        <div id="popup-error-launch" class="alert error">
+            <span class="closebtn">&times;</span>  
+            <p id="popup-error-message-launch"></p>
         </div>
     </div>
 </body>
