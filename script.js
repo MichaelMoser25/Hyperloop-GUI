@@ -513,10 +513,6 @@ const start = document.getElementById("start"); //start button
         let count = Math.ceil(+localStorage.getItem("Acceleration Time"));
 
         const countdownInterval = setInterval (() => { //function acts on 1s intervals and calculates the speed using kinematics while also decrementing the time in the status bar 
-          speedCounter++; 
-          document.getElementById("accelerationTime").innerHTML = "(" + count + "s)"; 
-          document.getElementById("speed").innerHTML = (speedCounter * +document.getElementById("acceleration").innerHTML * 3.6).toFixed(2); 
-          count--;
           if(count === 0) { //if the acceleration has been completed
             clearInterval(countdownInterval); //stops the countdown
             document.getElementById("accelerationTime").style.display = "none" //stops the acceleration time from showing 
@@ -526,7 +522,12 @@ const start = document.getElementById("start"); //start button
             }
             document.getElementById("acceleration").innerHTML = 0;  
             document.getElementById("accelerating-line").style.display = "flex"
+            return; 
           }
+          speedCounter++; 
+          document.getElementById("accelerationTime").innerHTML = "(" + count + "s)"; 
+          document.getElementById("speed").innerHTML = (speedCounter * +document.getElementById("acceleration").innerHTML * 3.6).toFixed(2); 
+          count--;
         }, 1000); //operates on 1s intervals 
 
       } else { //if the check for launch failed 
@@ -757,7 +758,8 @@ function checkVelocity() {
   document.getElementById("rpm").innerHTML = 0; 
   podStatus = "off"; 
   document.getElementById("braking-line").style.display = "flex"
-  LocalStorage.setItem("RPM", 0);
+  localStorage.setItem("RPM", 0);
+  stop.click();
   } else { 
     setTimeout(checkVelocity, 100); //if the check fails function will continue to look for the check to pass
   }
